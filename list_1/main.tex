@@ -1,0 +1,60 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+
+\title{Lista 1 \\
+\large Introdução à Análise Numérica \\
+Métodos iterativos para sistemas de equações lineares}
+\author{Lucas Emanuel Resck Domingues}
+\date{Setembro de 2020}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+\begin{document}
+
+    \maketitle
+
+    \begin{enumerate}
+        \item \begin{enumerate}
+            \item Vamos mostrar que o método converge.
+                Basta que os autovalores sejam menores do que 1.
+                Seja $C$ tal que $x^{(n+1)} = Cx^{(n)} + b$. Então segue que:
+                \begin{align*}
+                    (D+wL)^{-1}((1-w)D-wU)v &= \lambda v \\
+                    ((1-w)D-wU)v &= (D+wL)\lambda v
+                \end{align*}
+                Escolhemos uma linha $i$. Então vemos que:
+                \begin{align*}
+                    (1-w)a_{ii}v_i - w \sum_{j=i+1}^{m^2} a_{ij}v_j = a_{ii} \lambda v_i + \lambda w \sum_{j=1}^{i-1} a_{ij}v_j \\
+                    -a_{ii} \lambda v_i = \lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j \\
+                    |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j\right| \\
+                    |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij})v_j + (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} (-a_{ij})v_j\right| \\
+                \end{align*}
+                Suponhamos que exista $k$ tal que $v_k$ é estritamente maior do que algum $v_i$. Então é óbvio que:
+                \begin{align*}
+                    |a_{ii} \lambda| &< \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                    |4 \lambda| &< \left|2\lambda w + (1-w)4 + 2w\right| \\
+                \end{align*}
+                Caso nossa suposição não seja válida, ou seja, todos os componentes de $v$ são iguais, então escolhemos a primeira linha de A
+                que possui a soma da linha (com exceção da diagonal), em módulo, menor do que 4. Então vale que:
+                \begin{align*}
+                    |a_{ii} \lambda| &= \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                    |4 \lambda| &< \left|2\lambda w + (1-w)4 + w 2\right| \\
+                \end{align*}
+                Em ambos os casos, temos
+                \begin{align*}
+                    |\lambda| &< \left|\lambda \dfrac{w}{2} - (1-w) + \dfrac{w}{2} \right| \\
+                    & \le |\lambda| \left|\dfrac{w}{2}\right| + \left|1 - \dfrac{w}{2}\right| \\
+                    |\lambda| &< \dfrac{\left|1 - \dfrac{w}{2}\right|}{\left|1 - \dfrac{w}{2}\right|} \\
+                    &= 1
+                \end{align*}
+                Então o método SOR converge para essa matriz, desde que $0 < w < 2$, para qualquer $m$ natural.
+        \end{enumerate}
+    \end{enumerate}
+
+    \bibliographystyle{plain}
+\bibliography{references}
+\end{document}
