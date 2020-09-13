@@ -12,6 +12,7 @@ Métodos iterativos para sistemas de equações lineares}
 \usepackage{natbib}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{listings}
 
 \begin{document}
 
@@ -52,9 +53,70 @@ Métodos iterativos para sistemas de equações lineares}
                     &= 1
                 \end{align*}
                 Então o método SOR converge para essa matriz, desde que $0 < w < 2$, para qualquer $m$ natural.
+
+            \item O código do método SOR para essa matriz implementado em MATLAB pode ser conferido no Apêndice \ref{appendix:a}.
+            
+                A matriz em si não foi implementada, pois seus valores são previsíveis no momento da iteração.
+                Além disso, um vetor denso demonstrou maior velocidade em relação a um esparso.
+                Mais ainda, para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
+                o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
+                foi calculada para todos os valores e salvas em um vetor antes da iteração.
+
+                Seguem os resultados experimentais dos algoritmos:
+                
         \end{enumerate}
     \end{enumerate}
 
-    \bibliographystyle{plain}
-\bibliography{references}
+    \appendix
+
+    \section{Código para a questão 1.(b)}
+        \label{appendix:a}
+
+        \begin{lstlisting}[language=Matlab]
+        function b = b_vector(m)
+            b = sparse(m^2, 1);
+            b(1:m) = 1;
+            b((m^2-m+1):m^2) = 1;
+            for i=1:m
+                b(i*m) = b(i*m) + 1;
+                b(i*m-m+1) = b(i*m-m+1) + 1;
+            end
+            b = b*2;
+        end
+        
+        function [x, n, time] = sor(w, m)
+            tic
+            b = full(b_vector(m));
+            m2 = m^2;
+            x = zeros(m2, 1);
+            err = 1;
+            n = 0;
+            mod_vector = zeros(m2, 1);
+            for i=1:m2
+                mod_vector(i) = mod(i, m);
+            end
+            while err > 10e-3
+                for i=1:m2
+                    sum = 0;
+                    if i > m
+                        sum = sum - x(i-m);
+                    end
+                    if i <= m2-m
+                        sum = sum - x(i+m);
+                    end
+                    mod_i = mod_vector(i);
+                    if mod_i ~= 0
+                        sum = sum - x(i+1);
+                    end
+                    if mod_i ~= 1
+                        sum = sum - x(i-1);
+                    end
+                    x(i) = x(i) + w*((b(i)-sum)/4-x(i));
+                end
+                err = norm(x-2, 'inf')
+                n = n + 1;
+            end
+            time = toc;
+        end
+        \end{lstlisting}
 \end{document}
