@@ -22,98 +22,117 @@ Métodos iterativos para sistemas de equações lineares}
 
     \begin{enumerate}
         \item \begin{enumerate}
-            \item Vamos mostrar que o método converge.
-                Basta que os autovalores sejam menores do que 1.
-                Seja $C$ tal que $x^{(n+1)} = Cx^{(n)} + b$. Então segue que:
-                \begin{align*}
-                    (D+wL)^{-1}((1-w)D-wU)v &= \lambda v \\
-                    ((1-w)D-wU)v &= (D+wL)\lambda v
-                \end{align*}
-                Escolhemos uma linha $i$. Então vemos que:
-                \begin{align*}
-                    (1-w)a_{ii}v_i - w \sum_{j=i+1}^{m^2} a_{ij}v_j = a_{ii} \lambda v_i + \lambda w \sum_{j=1}^{i-1} a_{ij}v_j \\
-                    -a_{ii} \lambda v_i = \lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j \\
-                    |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j\right| \\
-                    |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij})v_j + (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} (-a_{ij})v_j\right| \\
-                \end{align*}
-                Suponhamos que exista $k$ tal que $v_k$ é estritamente maior do que algum $v_i$. Então é óbvio que:
-                \begin{align*}
-                    |a_{ii} \lambda| &< \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
-                    |4 \lambda| &< \left|2\lambda w + (1-w)4 + 2w\right| \\
-                \end{align*}
-                Caso nossa suposição não seja válida, ou seja, todos os componentes de $v$ são iguais, então escolhemos a primeira linha de A
-                que possui a soma da linha (com exceção da diagonal), em módulo, menor do que 4. Então vale que:
-                \begin{align*}
-                    |a_{ii} \lambda| &= \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
-                    |4 \lambda| &< \left|2\lambda w + (1-w)4 + w 2\right| \\
-                \end{align*}
-                Em ambos os casos, temos
-                \begin{align*}
-                    |\lambda| &< \left|\lambda \dfrac{w}{2} - (1-w) + \dfrac{w}{2} \right| \\
-                    & \le |\lambda| \left|\dfrac{w}{2}\right| + \left|1 - \dfrac{w}{2}\right| \\
-                    |\lambda| &< \dfrac{\left|1 - \dfrac{w}{2}\right|}{\left|1 - \dfrac{w}{2}\right|} \\
-                    &= 1
-                \end{align*}
-                Então o método SOR converge para essa matriz, desde que $0 < w < 2$, para qualquer $m$ natural.
+                \item Vamos mostrar que o método converge.
+                    Basta que os autovalores sejam menores do que 1.
+                    Seja $C$ tal que $x^{(n+1)} = Cx^{(n)} + b$. Então segue que:
+                    \begin{align*}
+                        (D+wL)^{-1}((1-w)D-wU)v &= \lambda v \\
+                        ((1-w)D-wU)v &= (D+wL)\lambda v
+                    \end{align*}
+                    Escolhemos uma linha $i$. Então vemos que:
+                    \begin{align*}
+                        (1-w)a_{ii}v_i - w \sum_{j=i+1}^{m^2} a_{ij}v_j = a_{ii} \lambda v_i + \lambda w \sum_{j=1}^{i-1} a_{ij}v_j \\
+                        -a_{ii} \lambda v_i = \lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j \\
+                        |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j\right| \\
+                        |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij})v_j + (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} (-a_{ij})v_j\right| \\
+                    \end{align*}
+                    Suponhamos que exista $k$ tal que $v_k$ é estritamente maior do que algum $v_i$. Então é óbvio que:
+                    \begin{align*}
+                        |a_{ii} \lambda| &< \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                        |4 \lambda| &< \left|2\lambda w + (1-w)4 + 2w\right| \\
+                    \end{align*}
+                    Caso nossa suposição não seja válida, ou seja, todos os componentes de $v$ são iguais, então escolhemos a primeira linha de A
+                    que possui a soma da linha (com exceção da diagonal), em módulo, menor do que 4. Então vale que:
+                    \begin{align*}
+                        |a_{ii} \lambda| &= \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                        |4 \lambda| &< \left|2\lambda w + (1-w)4 + w 2\right| \\
+                    \end{align*}
+                    Em ambos os casos, temos
+                    \begin{align*}
+                        |\lambda| &< \left|\lambda \dfrac{w}{2} - (1-w) + \dfrac{w}{2} \right| \\
+                        & \le |\lambda| \left|\dfrac{w}{2}\right| + \left|1 - \dfrac{w}{2}\right| \\
+                        |\lambda| &< \dfrac{\left|1 - \dfrac{w}{2}\right|}{\left|1 - \dfrac{w}{2}\right|} \\
+                        &= 1
+                    \end{align*}
+                    Então o método SOR converge para essa matriz, desde que $0 < w < 2$, para qualquer $m$ natural.
 
-            \item O código do método SOR para essa matriz implementado em MATLAB pode ser conferido no Apêndice \ref{appendix:a}.
+                \item O código do método SOR para essa matriz implementado em Matlab pode ser conferido no Apêndice \ref{appendix:a}.
+                
+                    A matriz em si não foi implementada, pois seus valores são previsíveis no momento da iteração.
+                    Isso é bom, pois guardar matrizes tão grandes na memória é muito custoso.
+                    Além disso, um vetor denso demonstrou maior velocidade em relação a um esparso.
+                    Mais ainda, para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
+                    o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
+                    foi calculada para todos os valores e salvas em um vetor antes da iteração. Por mais que utilizamos mais memória,
+                    para os tamanhos de matrizes utilizadas, valeu a pena a relação custo-benefício.
+
+                    Verifiquei, através de alguns experimentos, que o algoritmo não é muito sensível à variação no valor inicial do vetor $x$ ($x^{(0)}$).
+                    Dessa forma, um vetor inicial razoável é $x^{(0)}=(0, \cdots, 0)$.
+
+                    % x_0 = 000000
+
+                    Os resultados experimentais podem ser conferidos na Tabela \ref{tab:omega_m}.
+
+                    \begin{table}[!h]
+                        \centering
+                        \begin{tabular}{cc|c|c|c|c|c|c|c|}
+                            \cline{3-9}
+                                                &               & \multicolumn{7}{c|}{\textbf{$\omega$}}      \\ \cline{3-9} 
+                            &
+                            &
+                            \textbf{1} &
+                            \textbf{0.5} &
+                            \textbf{0} &
+                            \textbf{1.8840*} &
+                            \textbf{1.9397*} &
+                            \textbf{1.9937*} &
+                            \textbf{1.9987*} \\ \hline
+                            \multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{$m$}}} &
+                            \textbf{50} &
+                            3343 &
+                            10034 &
+                            X &
+                            142 &
+                            - &
+                            - &
+                            - \\ \cline{2-9} 
+                            \multicolumn{1}{|c|}{} & \textbf{100}  & 13114 & 39348 & X & - & 281 & -    & -     \\ \cline{2-9} 
+                            \multicolumn{1}{|c|}{} & \textbf{1000} & 1288257 & $>>$ & X & - & -   & 2787 & -     \\ \cline{2-9} 
+                            \multicolumn{1}{|c|}{} & \textbf{5000} & $>>$ & $>>$ & X & - & -   & -    & 13922 \\ \hline
+                        \end{tabular}
+                        \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
+                        significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu. $>>$ significa que o algoritmo
+                        leva muito tempo (não necessariamente muitas iterações) para ser realizado com os recursos computacionais disponíveis para este trabalho.}
+                        \label{tab:omega_m}
+                    \end{table}
+
+                    Fica óbvio que os valores de $\omega$ ótimos para cada $n$ performaram muito melhor, para cada $m$.
+                    Na verdade, para alguns valores de $n$, como 1000 e 5000, ficou quase impossível realizar os cálculos com meus recursos computacionais para outros valores de $\omega$,
+                    por mais que na teoria a convergência seja garantida.
+                    
+                    Sabemos que, se o algoritmo converge, então 0<$\omega$<2. Então, para $\omega=0$, o
+                    método não converge, o que foi verificado com a implementação.
+                    
+            \end{enumerate}
             
-                A matriz em si não foi implementada, pois seus valores são previsíveis no momento da iteração.
-                Isso é bom, pois guardar matrizes tão grandes na memória é muito custoso.
-                Além disso, um vetor denso demonstrou maior velocidade em relação a um esparso.
-                Mais ainda, para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
-                o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
-                foi calculada para todos os valores e salvas em um vetor antes da iteração. Por mais que utilizamos mais memória,
-                para os tamanhos de matrizes utilizadas, valeu a pena a relação custo-benefício.
-
-                Verifiquei, através de alguns experimentos, que o algoritmo não é muito sensível à variação no valor inicial do vetor $x$ ($x^{(0)}$).
-                Dessa forma, um vetor inicial razoável é $x^{(0)}=(0, \cdots, 0)$.
-
-                % x_0 = 000000
-
-                Os resultados experimentais podem ser conferidos na Tabela \ref{tab:omega_m}.
-
-                \begin{table}[!h]
-                    \centering
-                    \begin{tabular}{cc|c|c|c|c|c|c|c|}
-                        \cline{3-9}
-                                            &               & \multicolumn{7}{c|}{\textbf{$\omega$}}      \\ \cline{3-9} 
-                        &
-                        &
-                        \textbf{1} &
-                        \textbf{0.5} &
-                        \textbf{0} &
-                        \textbf{1.8840*} &
-                        \textbf{1.9397*} &
-                        \textbf{1.9937*} &
-                        \textbf{1.9987*} \\ \hline
-                        \multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{$m$}}} &
-                        \textbf{50} &
-                        3343 &
-                        10034 &
-                        X &
-                        142 &
-                        - &
-                        - &
-                        - \\ \cline{2-9} 
-                        \multicolumn{1}{|c|}{} & \textbf{100}  & 13114 & 39348 & X & - & 281 & -    & -     \\ \cline{2-9} 
-                        \multicolumn{1}{|c|}{} & \textbf{1000} & 1288257 & $>>$ & X & - & -   & 2787 & -     \\ \cline{2-9} 
-                        \multicolumn{1}{|c|}{} & \textbf{5000} & $>>$ & $>>$ & X & - & -   & -    & 13922 \\ \hline
-                    \end{tabular}
-                    \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
-                    significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu. $>>$ significa que o algoritmo
-                    leva muito tempo (não necessariamente muitas iterações) para ser realizado com os recursos computacionais disponíveis para este trabalho.}
-                    \label{tab:omega_m}
-                \end{table}
-
-                Fica óbvio que os valores de $\omega$ ótimos para cada $n$ performaram muito melhor, para cada $m$.
-                Na verdade, para alguns valores de $n$, como 1000 e 5000, ficou quase impossível realizar os cálculos com meus recursos computacionais para outros valores de $\omega$,
-                por mais que na teoria a convergência seja garantida.
+        \item \begin{enumerate}
+                \item O código em Matlab para a função solicitada se encontra no Apêndice \ref{appendix:b}.
                 
-                Sabemos que, se o algoritmo converge, então 0<$\omega$<2. Então, para $\omega=0$, o
-                método não converge, o que foi verificado com a implementação.
-                
-        \end{enumerate}
+                    Verifica-se de início se $n$ é par (positivo), para que faça sentido com a definição da matriz
+                    no enunciado do exercício. Os dois algoritmos, Jacobi e Seidel, são realizados de forma concomitante,
+                    no mesmo \textit{for loop} de iteração do vetor $x$. Para isso, basta que as atualizações do Jacobi, ao iterar o vetor $x$, não influenciem as atualizações
+                    dos outros componentes de $x$, até que se termine a iteração do vetor. Para isso, ao iniciar a iteração sobre cada vetor $x^{k}$, salva-se um vetor
+                    $x_{old}$ para o Jacobi.
+
+                    A matriz $A$ e o vetor $b$ não foram implementados. Os valores de $a_{ij}$ e $b_i$ são previsíveis no momento
+                    da iteração, dependendo dos valores de $i$.
+
+                    Por mais que os dois algoritmos sejam concomitantes nos mesmos \textit{loops}, acontece de que eles podem parar em momentos diferentes,
+                    por meio de declarações \textit{if}.
+
+                \item Para $n=100000$ e $\varepsilon=10^{-6}$, obtive $k_{jacobi}=34$ e $k_{seidel}=31$.
+            \end{enumerate}
+
     \end{enumerate}
 
     \appendix
@@ -167,5 +186,91 @@ function [x, n, time] = sor(w, m)
     end
     time = toc;
 end
+        \end{lstlisting}
+
+    \section{Código para a questão 2.(a)}
+        \label{appendix:b}
+
+        \begin{lstlisting}[language=Matlab]
+function [x_jacobi, x_seidel, k_jacobi, k_seidel] = jacobi_seidel(n, epsilon)
+    if n <= 0
+        error('n is not positive.');
+    else
+        if mod(n, 2) ~= 0
+            error('n is not an ever number.');
+        end
+    end
+    x_jacobi = zeros(n, 1);
+    x_seidel= zeros(n, 1);    
+    err_jacobi = 1;
+    err_seidel = 1;
+    k_jacobi = 0;
+    k_seidel = 0;
+    while err_jacobi >= epsilon || err_seidel >= epsilon
+        x_jacobi_old = x_jacobi;
+        for i=1:n
+            if err_seidel >= epsilon
+                sum_s = 0;
+                if i == n/2 || i == n/2+1
+                    sum_s = sum_s + x_seidel(i-1);
+                    sum_s = sum_s + x_seidel(i+1) + 1;
+                    sum_s = sum_s/3;
+                else
+                    if i == 1
+                        sum_s = sum_s + x_seidel(2);
+                        sum_s = sum_s - 1/2*x_seidel(n) + 5/2;
+                        sum_s = sum_s/3;
+                    else
+                        if i == n
+                            sum_s = sum_s + x_seidel(n-1);
+                            sum_s = sum_s - 1/2*x_seidel(1) + 5/2;
+                            sum_s = sum_s/3;
+                        else
+                            sum_s = sum_s + x_seidel(i-1);
+                            sum_s = sum_s + x_seidel(i+1);
+                            sum_s = sum_s - 1/2*x_seidel(n+1-i) + 3/2;
+                            sum_s = sum_s/3;
+                        end
+                    end
+                end
+                x_seidel(i) = sum_s;
+            end
+            if err_jacobi >= epsilon
+                sum_j= 0;
+                if i == n/2 || i == n/2+1
+                    sum_j = sum_j + x_jacobi_old(i-1);
+                    sum_j = sum_j + x_jacobi_old(i+1) + 1;
+                    sum_j = sum_j/3;
+                else
+                    if i == 1
+                        sum_j = sum_j + x_jacobi_old(2);
+                        sum_j = sum_j - 1/2*x_jacobi_old(n) + 5/2;
+                        sum_j = sum_j/3;
+                    else
+                        if i == n
+                            sum_j = sum_j + x_jacobi_old(n-1);
+                            sum_j = sum_j - 1/2*x_jacobi_old(1) + 5/2;
+                            sum_j = sum_j/3;
+                        else
+                            sum_j = sum_j + x_jacobi_old(i-1);
+                            sum_j = sum_j + x_jacobi_old(i+1);
+                            sum_j = sum_j - 1/2*x_jacobi_old(n+1-i) + 3/2;
+                            sum_j = sum_j/3;
+                        end
+                    end
+                end
+                x_jacobi(i) = sum_j;
+            end
+        end
+        if err_jacobi >= epsilon
+            err_jacobi= norm(x_jacobi-1,'inf');
+            k_jacobi = k_jacobi + 1;
+        end
+        if err_seidel >= epsilon
+            err_seidel = norm(x_seidel-1,'inf');
+            k_seidel = k_seidel + 1;
+        end
+    end
+end        
         \end{lstlisting}
 \end{document}
