@@ -27,7 +27,7 @@ function [x, n, time] = sor(w, m)
             end
             x(i) = x(i) + w*((b(i)-sum)/4-x(i));
         end
-        err = norm(x-2, 'inf')
+        err = norm(x-2, 'inf');
         n = n + 1;
     end
     time = toc;
