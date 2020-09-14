@@ -1,4 +1,4 @@
-function [err_jacobi, err_seidel, x] = conjugate_gradient(n, k_jacobi, k_seidel)
+function [err_jacobi, err_seidel, x] = conj_grad(n, k_jacobi, k_seidel)
     % Check if n is OK
     if n < 4
         error('n is less than 4.');
@@ -50,8 +50,8 @@ function [err_jacobi, err_seidel, x] = conjugate_gradient(n, k_jacobi, k_seidel)
         alpha = d'*r/denom;
         x = x + alpha*d;
         r = r - alpha*mult;
-        % Calculate the beta coefficient using old calculated numbers and
-        % vectors
+        % Calculate the beta coefficient using old
+        % calculated numbers and vectors
         beta = r'*mult/denom;
         d = r - beta*d;
         if i == k_jacobi
