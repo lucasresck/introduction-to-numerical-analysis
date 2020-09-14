@@ -59,10 +59,17 @@ Métodos iterativos para sistemas de equações lineares}
             \item O código do método SOR para essa matriz implementado em MATLAB pode ser conferido no Apêndice \ref{appendix:a}.
             
                 A matriz em si não foi implementada, pois seus valores são previsíveis no momento da iteração.
+                Isso é bom, pois guardar matrizes tão grandes na memória é muito custoso.
                 Além disso, um vetor denso demonstrou maior velocidade em relação a um esparso.
                 Mais ainda, para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
                 o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
-                foi calculada para todos os valores e salvas em um vetor antes da iteração.
+                foi calculada para todos os valores e salvas em um vetor antes da iteração. Por mais que utilizamos mais memória,
+                para os tamanhos de matrizes utilizadas, valeu a pena a relação custo-benefício.
+
+                Verifiquei, através de alguns experimentos, que o algoritmo não é muito sensível à variação no valor inicial do vetor $x$ ($x^{(0)}$).
+                Dessa forma, um vetor inicial razoável é $x^{(0)}=(0, \cdots, 0)$.
+
+                % x_0 = 000000
 
                 Os resultados experimentais podem ser conferidos na Tabela \ref{tab:omega_m}.
 
@@ -90,13 +97,21 @@ Métodos iterativos para sistemas de equações lineares}
                         - &
                         - \\ \cline{2-9} 
                         \multicolumn{1}{|c|}{} & \textbf{100}  & 13114 & 39348 & X & - & 281 & -    & -     \\ \cline{2-9} 
-                        \multicolumn{1}{|c|}{} & \textbf{1000} &       &       & X & - & -   & 2787 & -     \\ \cline{2-9} 
-                        \multicolumn{1}{|c|}{} & \textbf{5000} &       &       & X & - & -   & -    & 13922 \\ \hline
+                        \multicolumn{1}{|c|}{} & \textbf{1000} & 1288257 & $>>$ & X & - & -   & 2787 & -     \\ \cline{2-9} 
+                        \multicolumn{1}{|c|}{} & \textbf{5000} & $>>$ & $>>$ & X & - & -   & -    & 13922 \\ \hline
                     \end{tabular}
                     \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
-                    significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu.}
+                    significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu. $>>$ significa que o algoritmo
+                    leva muito tempo (não necessariamente muitas iterações) para ser realizado com os recursos computacionais disponíveis para este trabalho.}
                     \label{tab:omega_m}
                 \end{table}
+
+                Fica óbvio que os valores de $\omega$ ótimos para cada $n$ performaram muito melhor, para cada $m$.
+                Na verdade, para alguns valores de $n$, como 1000 e 5000, ficou quase impossível realizar os cálculos com meus recursos computacionais para outros valores de $\omega$,
+                por mais que na teoria a convergência seja garantida.
+                
+                Sabemos que, se o algoritmo converge, então 0<$\omega$<2. Então, para $\omega=0$, o
+                método não converge, o que foi verificado com a implementação.
                 
         \end{enumerate}
     \end{enumerate}
@@ -107,50 +122,50 @@ Métodos iterativos para sistemas de equações lineares}
         \label{appendix:a}
 
         \begin{lstlisting}[language=Matlab]
-        function b = b_vector(m)
-            b = sparse(m^2, 1);
-            b(1:m) = 1;
-            b((m^2-m+1):m^2) = 1;
-            for i=1:m
-                b(i*m) = b(i*m) + 1;
-                b(i*m-m+1) = b(i*m-m+1) + 1;
+function b = b_vector(m)
+    b = sparse(m^2, 1);
+    b(1:m) = 1;
+    b((m^2-m+1):m^2) = 1;
+    for i=1:m
+        b(i*m) = b(i*m) + 1;
+        b(i*m-m+1) = b(i*m-m+1) + 1;
+    end
+    b = b*2;
+end
+
+function [x, n, time] = sor(w, m)
+    tic
+    b = full(b_vector(m));
+    m2 = m^2;
+    x = zeros(m2, 1);
+    err = 1;
+    n = 0;
+    mod_vector = zeros(m2, 1);
+    for i=1:m2
+        mod_vector(i) = mod(i, m);
+    end
+    while err > 10e-6
+        for i=1:m2
+            sum = 0;
+            if i > m
+                sum = sum - x(i-m);
             end
-            b = b*2;
+            if i <= m2-m
+                sum = sum - x(i+m);
+            end
+            mod_i = mod_vector(i);
+            if mod_i ~= 0
+                sum = sum - x(i+1);
+            end
+            if mod_i ~= 1
+                sum = sum - x(i-1);
+            end
+            x(i) = x(i) + w*((b(i)-sum)/4-x(i));
         end
-        
-        function [x, n, time] = sor(w, m)
-            tic
-            b = full(b_vector(m));
-            m2 = m^2;
-            x = zeros(m2, 1);
-            err = 1;
-            n = 0;
-            mod_vector = zeros(m2, 1);
-            for i=1:m2
-                mod_vector(i) = mod(i, m);
-            end
-            while err > 10e-3
-                for i=1:m2
-                    sum = 0;
-                    if i > m
-                        sum = sum - x(i-m);
-                    end
-                    if i <= m2-m
-                        sum = sum - x(i+m);
-                    end
-                    mod_i = mod_vector(i);
-                    if mod_i ~= 0
-                        sum = sum - x(i+1);
-                    end
-                    if mod_i ~= 1
-                        sum = sum - x(i-1);
-                    end
-                    x(i) = x(i) + w*((b(i)-sum)/4-x(i));
-                end
-                err = norm(x-2, 'inf')
-                n = n + 1;
-            end
-            time = toc;
-        end
+        err = norm(x-2, 'inf');
+        n = n + 1;
+    end
+    time = toc;
+end
         \end{lstlisting}
 \end{document}
