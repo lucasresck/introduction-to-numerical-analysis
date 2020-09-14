@@ -13,6 +13,8 @@ Métodos iterativos para sistemas de equações lineares}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{listings}
+\usepackage{multirow}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -62,7 +64,39 @@ Métodos iterativos para sistemas de equações lineares}
                 o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
                 foi calculada para todos os valores e salvas em um vetor antes da iteração.
 
-                Seguem os resultados experimentais dos algoritmos:
+                Os resultados experimentais podem ser conferidos na Tabela \ref{tab:omega_m}.
+
+                \begin{table}[!h]
+                    \centering
+                    \begin{tabular}{cc|c|c|c|c|c|c|c|}
+                        \cline{3-9}
+                                            &               & \multicolumn{7}{c|}{\textbf{$\omega$}}      \\ \cline{3-9} 
+                        &
+                        &
+                        \textbf{1} &
+                        \textbf{0.5} &
+                        \textbf{0} &
+                        \textbf{1.8840*} &
+                        \textbf{1.9397*} &
+                        \textbf{1.9937*} &
+                        \textbf{1.9987*} \\ \hline
+                        \multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{$m$}}} &
+                        \textbf{50} &
+                        3343 &
+                        10034 &
+                        X &
+                        142 &
+                        - &
+                        - &
+                        - \\ \cline{2-9} 
+                        \multicolumn{1}{|c|}{} & \textbf{100}  & 13114 & 39348 & X & - & 281 & -    & -     \\ \cline{2-9} 
+                        \multicolumn{1}{|c|}{} & \textbf{1000} &       &       & X & - & -   & 2787 & -     \\ \cline{2-9} 
+                        \multicolumn{1}{|c|}{} & \textbf{5000} &       &       & X & - & -   & -    & 13922 \\ \hline
+                    \end{tabular}
+                    \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
+                    significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu.}
+                    \label{tab:omega_m}
+                \end{table}
                 
         \end{enumerate}
     \end{enumerate}
