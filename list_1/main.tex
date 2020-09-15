@@ -62,11 +62,12 @@ Métodos iterativos para sistemas de equações lineares}
                 
                     A matriz em si não foi implementada, pois seus valores são previsíveis no momento da iteração.
                     Isso é bom, pois guardar matrizes tão grandes na memória é muito custoso.
-                    Além disso, um vetor denso demonstrou maior velocidade em relação a um esparso.
-                    Mais ainda, para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
+                    No caso de uma matriz esparsa, é custoso criar a matriz.
+                    Para a previsão de qual o valor dos termos da matriz durante a iteração, fez-se necessário
                     o cálculo do resto de uma divisão (função \lstinline{mod}), que, ao invés de ser calculada em toda iteração,
-                    foi calculada para todos os valores e salvas em um vetor antes da iteração. Por mais que utilizamos mais memória,
-                    para os tamanhos de matrizes utilizadas, valeu a pena a relação custo-benefício.
+                    foi calculada para todos os valores e salvas em um vetor antes da iteração. Por mais que utilizamos uma memória que pode
+                    ser substancial no caso de matrizes muito grandes, neste exercício,
+                    para os tamanhos de matrizes utilizadas, o custo-benefício se justificou.
 
                     Verifiquei, através de alguns experimentos, que o algoritmo não é muito sensível à variação no valor inicial do vetor $x$ ($x^{(0)}$).
                     Dessa forma, um vetor inicial razoável é $x^{(0)}=(0, \cdots, 0)$.
@@ -101,15 +102,15 @@ Métodos iterativos para sistemas de equações lineares}
                             \multicolumn{1}{|c|}{} & \textbf{1000} & $>>$ & $>>$ & X & - & -   & 3157 & -     \\ \cline{2-9} 
                             \multicolumn{1}{|c|}{} & \textbf{5000} & $>>$ & $>>$ & X & - & -   & -    & 15770 \\ \hline
                         \end{tabular}
-                        \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
+                        \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método SOR. Os valores de $\omega$ com asterisco ($*$)
                         significam os valores ótimos dos respectivos valores de $m$. X significa que o algoritmo não convergiu. $>>$ significa que o algoritmo
                         leva muito tempo (não necessariamente muitas iterações) para ser realizado com os recursos computacionais disponíveis para este trabalho.}
                         \label{tab:omega_m}
                     \end{table}
 
                     Fica óbvio que os valores de $\omega$ ótimos para cada $n$ performaram muito melhor, para cada $m$.
-                    Na verdade, para alguns valores de $n$, como 1000 e 5000, ficou quase impossível realizar os cálculos com meus recursos computacionais para outros valores de $\omega$,
-                    por mais que na teoria a convergência seja garantida.
+                    Na verdade, para alguns valores de $m$, como 1000 e 5000, ficou quase impossível realizar os cálculos com meus recursos computacionais para outros valores de $\omega$,
+                    por mais que a teoria garanta a convergência.
                     
                     Sabemos que, se o algoritmo converge, então 0<$\omega$<2. Então, para $\omega=0$, o
                     método não converge, o que foi verificado com a implementação.
@@ -119,14 +120,14 @@ Métodos iterativos para sistemas de equações lineares}
         \item \begin{enumerate}
                 \item O código em Matlab para a função solicitada se encontra no Apêndice \ref{appendix:b}.
                 
-                    Verifica-se de início se $n$ é par (positivo), para que faça sentido com a definição da matriz
+                    Verifica-se de início se $n$ é par e maior do que ou igual a 4, para que faça sentido com a definição da matriz
                     no enunciado do exercício. Os dois algoritmos, Jacobi e Seidel, são realizados de forma concomitante,
                     no mesmo \textit{for loop} de iteração do vetor $x$. Para isso, basta que as atualizações do Jacobi, ao iterar o vetor $x$, não influenciem as atualizações
                     dos outros componentes de $x$, até que se termine a iteração do vetor. Para isso, ao iniciar a iteração sobre cada vetor $x^{k}$, salva-se um vetor
                     $x_{old}$ para o Jacobi.
 
                     A matriz $A$ e o vetor $b$ não foram implementados. Os valores de $a_{ij}$ e $b_i$ são previsíveis no momento
-                    da iteração, dependendo dos valores de $i$.
+                    da iteração, através dos valores de $i$.
 
                     Por mais que os dois algoritmos sejam concomitantes nos mesmos \textit{loops}, acontece de que eles podem parar em momentos diferentes,
                     por meio de declarações \textit{if}.
@@ -140,7 +141,7 @@ Métodos iterativos para sistemas de equações lineares}
                     Inicia-se $x^{(0)} = (0, \cdots, 0)$. Inicia-se os outros vetores
                     relevantes. O método implementado é aquele visto em aula.
                     Porém, ele foi modificado para que sirva para essa matriz $A$ de forma mais eficiente.
-                    A multiplicação da matriz (que é naturalmente esparse) pelos vetores correspondentes é 
+                    A multiplicação da matriz (que é naturalmente esparsa) pelos vetores correspondentes é 
                     feita de forma elemento a elemento, de modo análogo ao que foi feito
                     no exercício 2.(a).
 
