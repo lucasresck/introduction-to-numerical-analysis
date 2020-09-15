@@ -154,7 +154,7 @@ Métodos iterativos para sistemas de equações lineares}
 
     \appendix
 
-    \section{Código para a questão 1.(b)}
+    \section{Método SOR}
         \label{appendix:a}
 
         \begin{lstlisting}[language=Matlab]
@@ -167,15 +167,17 @@ function b = b_vector(m)
         b(i*m-m+1) = b(i*m-m+1) + 1;
     end
     b = b*2;
-end
+end        
 
 function [x, n, time] = sor(w, m)
     tic
+    % Create the b vector
     b = full(b_vector(m));
     m2 = m^2;
     x = zeros(m2, 1);
     err = 1;
     n = 0;
+    % Compute the mods for latter use (many times used)
     mod_vector = zeros(m2, 1);
     for i=1:m2
         mod_vector(i) = mod(i, m);
@@ -196,6 +198,8 @@ function [x, n, time] = sor(w, m)
             if mod_i ~= 1
                 sum = sum - x(i-1);
             end
+            % More efficient formula
+            % Only one multiplication
             x(i) = x(i) + w*((b(i)-sum)/4-x(i));
         end
         err = norm(x-2, 'inf');
@@ -203,29 +207,34 @@ function [x, n, time] = sor(w, m)
     end
     time = toc;
 end
+
         \end{lstlisting}
 
-    \section{Código para a questão 2.(a)}
+    \section{Métodos de Jacobi e Seidel}
         \label{appendix:b}
 
         \begin{lstlisting}[language=Matlab]
 function [x_jacobi, x_seidel, k_jacobi, k_seidel] = jacobi_seidel(n, epsilon)
-    if n <= 0
-        error('n is not positive.');
+    tic
+    if n < 4
+        error('n is less than 4.');
     else
         if mod(n, 2) ~= 0
             error('n is not an ever number.');
         end
     end
     x_jacobi = zeros(n, 1);
-    x_seidel= zeros(n, 1);    
+    x_seidel = zeros(n, 1);    
     err_jacobi = 1;
     err_seidel = 1;
     k_jacobi = 0;
     k_seidel = 0;
     while err_jacobi >= epsilon || err_seidel >= epsilon
+        % Jacobi needs the old values when iterating
         x_jacobi_old = x_jacobi;
         for i=1:n
+            % Here we only continue to iterate Seidel if
+            % it's necessary
             if err_seidel >= epsilon
                 sum_s = 0;
                 if i == n/2 || i == n/2+1
@@ -279,16 +288,22 @@ function [x_jacobi, x_seidel, k_jacobi, k_seidel] = jacobi_seidel(n, epsilon)
                 x_jacobi(i) = sum_j;
             end
         end
+        % We do not update k nor time nor error for Jacobi if
+        % it's not necessary anymore
         if err_jacobi >= epsilon
-            err_jacobi= norm(x_jacobi-1,'inf');
+            err_jacobi = norm(x_jacobi-1,'inf');
             k_jacobi = k_jacobi + 1;
+            toc_jacobi = toc;
         end
+        % The same for Seidel
         if err_seidel >= epsilon
             err_seidel = norm(x_seidel-1,'inf');
             k_seidel = k_seidel + 1;
+            toc_seidel = toc;
         end
     end
-end        
+    display([toc_jacobi, toc_seidel]);
+end
         \end{lstlisting}
 
     \section{Método do gradiente conjugado}
@@ -315,10 +330,10 @@ function [err_jacobi, err_seidel, x] = conj_grad(n, k_jacobi, k_seidel)
     r(n/2+1) = 1;
     % Start d_0 = r_0
     d = r;
-
+    
     err_jacobi = 0;
     err_seidel = 0;
-
+    
     for i=1:n
         % Stop condition
         if sum(abs(r)) == 0
@@ -361,6 +376,6 @@ function [err_jacobi, err_seidel, x] = conj_grad(n, k_jacobi, k_seidel)
             break
         end
     end
-end       
+end
         \end{lstlisting}
 \end{document}
