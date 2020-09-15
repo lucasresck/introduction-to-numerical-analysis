@@ -130,7 +130,7 @@ Métodos iterativos para sistemas de equações lineares}
                     Por mais que os dois algoritmos sejam concomitantes nos mesmos \textit{loops}, acontece de que eles podem parar em momentos diferentes,
                     por meio de declarações \textit{if}.
 
-                \item Para $n=100000$ e $\varepsilon=10^{-6}$, obtive $k_{jacobi}=34$ e $k_{seidel}=31$.
+                \item Para $n=100000$ e $\varepsilon=10^{-6}$, obtive $k_{jacobi}=45$ e $k_{seidel}=37$.
                 
                 \item O código em Matlab para a função solicitada se encontra
                     no Apêndice \ref{appendix:c}.
@@ -143,11 +143,10 @@ Métodos iterativos para sistemas de equações lineares}
                     feita de forma elemento a elemento, de modo análogo ao que foi feito
                     no exercício 2.(a).
 
-                    O método foi executado. Para $k_{jacobi} = 34$, obtivemos erro de $4.4409\cdot 10^{-16}$,
-                    enquanto que, para $k_{seidel} = 31$, o erro foi de $6.6613\cdot 10^{-16}$. Ora, ambos os métodos
+                    O método foi executado. Para $k_{jacobi} = 45$, obtivemos erro de $4.4409\cdot 10^{-16}$,
+                    enquanto que, para $k_{seidel} = 37$, o erro foi o mesmo $4.4409\cdot 10^{-16}$. Ora, ambos os métodos
                     de Jacobi e Seidel possuem esse valor de $k$ para uma tolerância de $10^{-6}$. Então concluímos que
-                    o método do gradiente conjugado teve melhor performance, no quesito número
-                    de iterações.
+                    o método do gradiente conjugado teve melhor performance no mesmo número de iterações.
             \end{enumerate}
 
     \end{enumerate}
