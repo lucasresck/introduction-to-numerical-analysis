@@ -16,6 +16,8 @@ Métodos iterativos para sistemas de equações lineares}
 \usepackage{multirow}
 \usepackage{hyperref}
 
+\lstset{columns=fullflexible}
+
 \begin{document}
 
     \maketitle
@@ -158,6 +160,9 @@ Métodos iterativos para sistemas de equações lineares}
     \section{Método SOR}
         \label{appendix:a}
 
+        O código para as funções implementadas também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_1}{neste repositório do GitHub}.
+
         \begin{lstlisting}[language=Matlab]
 function b = b_vector(m)
     b = sparse(m^2, 1);
@@ -213,6 +218,9 @@ end
 
     \section{Métodos de Jacobi e Seidel}
         \label{appendix:b}
+
+        O código para a função implementada também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_1}{neste repositório do GitHub}.
 
         \begin{lstlisting}[language=Matlab]
 function [x_jacobi, x_seidel, k_jacobi, k_seidel] = jacobi_seidel(n, epsilon)
@@ -310,7 +318,10 @@ end
     \section{Método do gradiente conjugado}
         \label{appendix:c}
 
-        \begin{lstlisting}
+        O código para a função implementada também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_1}{neste repositório do GitHub}.
+
+        \begin{lstlisting}[language=Matlab]
 function [err_jacobi, err_seidel, x] = conj_grad(n, k_jacobi, k_seidel)
     % Check if n is OK
     if n < 4
