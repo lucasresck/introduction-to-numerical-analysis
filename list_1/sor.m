@@ -1,10 +1,12 @@
 function [x, n, time] = sor(w, m)
     tic
+    % Create the b vector
     b = full(b_vector(m));
     m2 = m^2;
     x = zeros(m2, 1);
     err = 1;
     n = 0;
+    % Compute the mods for latter use (many times used)
     mod_vector = zeros(m2, 1);
     for i=1:m2
         mod_vector(i) = mod(i, m);
@@ -25,6 +27,8 @@ function [x, n, time] = sor(w, m)
             if mod_i ~= 1
                 sum = sum - x(i-1);
             end
+            % More efficient formula
+            % Only one multiplication
             x(i) = x(i) + w*((b(i)-sum)/4-x(i));
         end
         err = norm(x-2, 'inf');
