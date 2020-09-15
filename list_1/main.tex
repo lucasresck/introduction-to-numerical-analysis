@@ -69,9 +69,8 @@ Métodos iterativos para sistemas de equações lineares}
                     Verifiquei, através de alguns experimentos, que o algoritmo não é muito sensível à variação no valor inicial do vetor $x$ ($x^{(0)}$).
                     Dessa forma, um vetor inicial razoável é $x^{(0)}=(0, \cdots, 0)$.
 
-                    % x_0 = 000000
-
-                    Os resultados experimentais podem ser conferidos na Tabela \ref{tab:omega_m}.
+                    Os valores de $n$ para diferentes valores de $m$ e de $\omega$, com tolerância de 
+                    $10^{-6}$, podem ser conferidos na Tabela \ref{tab:omega_m}.
 
                     \begin{table}[!h]
                         \centering
@@ -89,15 +88,15 @@ Métodos iterativos para sistemas de equações lineares}
                             \textbf{1.9987*} \\ \hline
                             \multicolumn{1}{|c|}{\multirow{4}{*}{\textbf{$m$}}} &
                             \textbf{50} &
-                            3343 &
-                            10034 &
+                            3950 &
+                            11855 &
                             X &
-                            142 &
+                            161 &
                             - &
                             - &
                             - \\ \cline{2-9} 
-                            \multicolumn{1}{|c|}{} & \textbf{100}  & 13114 & 39348 & X & - & 281 & -    & -     \\ \cline{2-9} 
-                            \multicolumn{1}{|c|}{} & \textbf{1000} & 1288257 & $>>$ & X & - & -   & 2787 & -     \\ \cline{2-9} 
+                            \multicolumn{1}{|c|}{} & \textbf{100}  & 15494 & 46488 & X & - & 318 & -    & -     \\ \cline{2-9} 
+                            \multicolumn{1}{|c|}{} & \textbf{1000} & 1288257 & $>>$ & X & - & -   & 3157 & -     \\ \cline{2-9} 
                             \multicolumn{1}{|c|}{} & \textbf{5000} & $>>$ & $>>$ & X & - & -   & -    & 13922 \\ \hline
                         \end{tabular}
                         \caption{Valores de $n$ para diversos valores de $m$ e de $\omega$ para o método de SOR. Os valores de $\omega$ com asterisco ($*$)
@@ -181,7 +180,7 @@ function [x, n, time] = sor(w, m)
     for i=1:m2
         mod_vector(i) = mod(i, m);
     end
-    while err > 10e-6
+    while err > 10^-6
         for i=1:m2
             sum = 0;
             if i > m
