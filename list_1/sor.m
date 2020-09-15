@@ -11,7 +11,7 @@ function [x, n, time] = sor(w, m)
     for i=1:m2
         mod_vector(i) = mod(i, m);
     end
-    while err > 10e-6
+    while err > 10^-6
         for i=1:m2
             sum = 0;
             if i > m
