@@ -24,33 +24,35 @@ Métodos iterativos para sistemas de equações lineares}
         \item \begin{enumerate}
                 \item Vamos mostrar que o método converge.
                     Basta que os autovalores sejam menores do que 1.
-                    Seja $C$ tal que $x^{(n+1)} = Cx^{(n)} + b$. Então segue que:
+                    Seja $C$ tal que $x^{(n+1)} = Cx^{(n)} + b$.
+                    Então, se $v$ é autovetor e $\lambda$ é autovalor comrrespondente, segue que:
                     \begin{align*}
                         (D+wL)^{-1}((1-w)D-wU)v &= \lambda v \\
                         ((1-w)D-wU)v &= (D+wL)\lambda v
                     \end{align*}
-                    Escolhemos uma linha $i$. Então vemos que:
+                    Escolhemos uma linha $i$. Se $A_{ij}=a_{ij}$, vemos que:
                     \begin{align*}
                         (1-w)a_{ii}v_i - w \sum_{j=i+1}^{m^2} a_{ij}v_j = a_{ii} \lambda v_i + \lambda w \sum_{j=1}^{i-1} a_{ij}v_j \\
                         -a_{ii} \lambda v_i = \lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j \\
                         |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} a_{ij}v_j - (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} a_{ij}v_j\right| \\
                         |a_{ii} \lambda v_i| = \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij})v_j + (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} (-a_{ij})v_j\right| \\
                     \end{align*}
-                    Suponhamos que exista $k$ tal que $v_k$ é estritamente maior do que algum $v_i$. Então é óbvio que:
+                    Suponhamos que as coordenadas de $v$ não sejam todas iguais. Segue que existe $k$ tal que $v_k$ é estritamente maior do que algum $v_i$. Então é fácil ver que:
                     \begin{align*}
-                        |a_{ii} \lambda| &< \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                        |a_{ii} \lambda| &= \dfrac{1}{|v_i|} \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij})v_j + (1-w)a_{ii}v_i + w \sum_{j=i+1}^{m^2} (-a_{ij})v_j\right| \\
+                        &< \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
                         |4 \lambda| &< \left|2\lambda w + (1-w)4 + 2w\right| \\
                     \end{align*}
                     Caso nossa suposição não seja válida, ou seja, todos os componentes de $v$ são iguais, então escolhemos a primeira linha de A
                     que possui a soma da linha (com exceção da diagonal), em módulo, menor do que 4. Então vale que:
                     \begin{align*}
                         |a_{ii} \lambda| &= \left|\lambda w \sum_{j=1}^{i-1} (-a_{ij}) + (1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
-                        |4 \lambda| &< \left|2\lambda w + (1-w)4 + w 2\right| \\
+                        &\le |\lambda| \left| w \sum_{j=1}^{i-1} (-a_{ij})\right| + \left|(1-w)a_{ii} + w \sum_{j=i+1}^{m^2} (-a_{ij})\right| \\
+                        &< |\lambda| \left|2 w| + |(1-w)4 + w 2\right| \\
                     \end{align*}
                     Em ambos os casos, temos
                     \begin{align*}
-                        |\lambda| &< \left|\lambda \dfrac{w}{2} - (1-w) + \dfrac{w}{2} \right| \\
-                        & \le |\lambda| \left|\dfrac{w}{2}\right| + \left|1 - \dfrac{w}{2}\right| \\
+                        |\lambda| &< |\lambda| \left|\dfrac{w}{2}\right| + \left|1 - \dfrac{w}{2}\right| \\
                         |\lambda| &< \dfrac{\left|1 - \dfrac{w}{2}\right|}{\left|1 - \dfrac{w}{2}\right|} \\
                         &= 1
                     \end{align*}
