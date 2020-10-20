@@ -1,0 +1,199 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+
+\title{Lista 3 \\
+\large Introdução à Análise Numérica \\
+Interpolação}
+\author{Lucas Emanuel Resck Domingues}
+\date{Outubro de 2020}
+
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{hyperref}
+
+\lstset{columns=fullflexible}
+
+%Hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    allcolors=,  % Nothing change colors
+    urlcolor=blue  % URL changes color
+}
+
+\begin{document}
+
+    \maketitle
+
+    \begin{enumerate}
+        \item[2.] Vamos utilizar o método das diferenças de Newton,
+            encontrar os coeficientes $c_n$ e finalmente encontrar $P(k)$.
+
+            $P$ é um polinômio de grau $n$, e sabemos que ele passa
+            pelos pontos
+
+            $$(1, -1), (2, -2), \cdots, (n, -n), (0, (-1)^n)$$
+
+            sendo o último ponto justificado por $P(0) = (-1)^n$
+            (termo independente).
+            Então o polinômio escrito na forma do método das diferenças fica
+
+            \begin{align*}
+                P(x) &= c_0 + c_1 (x - x_1) + \cdots + c_n (x - x_1)\cdots(x - x_n) \\
+                &= c_0 + c_1 (x - 1) + \cdots + c_n (x - 1)\cdots(x - n) \\
+            \end{align*}
+
+            A Tabela \ref{tab:diff} mostra o cálculo dos coeficientes $c_i$
+            pelo método das diferenças de Newton.
+
+            % https://www.tablesgenerator.com/
+            
+            \begin{table}[!h]
+                \centering
+                \begin{tabular}{c|c|c|c|c|l}
+                    x &
+                    $y=\Delta^1$ &
+                    $\Delta^2$ &
+                    $\Delta^3$ &
+                    $\Delta^4$ &
+                    \multirow{18}{*}{$\cdots$} \\ \cline{1-5}
+                    \multirow{2}{*}{1} &
+                    \multirow{2}{*}{$\mathbf{-1}$} &
+                    &
+                    &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$\mathbf{-1}$} &
+                    &
+                    &
+                    \\
+                    \multirow{2}{*}{2} &
+                    \multirow{2}{*}{$-2$} &
+                    &
+                    \multirow{2}{*}{$\mathbf{0}$} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$-1$} &
+                    &
+                    \multirow{2}{*}{$\mathbf{0}$} &
+                    \\
+                    \multirow{2}{*}{3} &
+                    \multirow{2}{*}{$-3$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$-1$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    \\
+                    \multirow{2}{*}{4} &
+                    \multirow{2}{*}{$-4$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$-1$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    \\
+                    \multirow{2}{*}{5} &
+                    \multirow{2}{*}{$-5$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{3}{*}{$\vdots$} &
+                    &
+                    \multirow{3}{*}{$\vdots$} &
+                    \\
+                    $\vdots$ &
+                    $\vdots$ &
+                    &
+                    $\vdots$ &
+                    &
+                    \\
+                    \multirow{2}{*}{$n-1$} &
+                    \multirow{2}{*}{$-(n-1)$} &
+                    &
+                    \multirow{2}{*}{0} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$-1$} &
+                    &
+                    \multirow{2}{*}{$C(n)$} &
+                    \\
+                    \multirow{2}{*}{n} &
+                    \multirow{2}{*}{$-n$} &
+                    &
+                    \multirow{2}{*}{$B(n)$} &
+                    &
+                    \\
+                    &
+                    &
+                    \multirow{2}{*}{$A(n)$} &
+                    &
+                    &
+                    \\
+                    \multirow{2}{*}{0} &
+                    \multirow{2}{*}{$(-1)^n$} &
+                    &
+                    &
+                    &
+                    \\
+                    &
+                    &
+                    &
+                    &
+                    &
+                
+                \end{tabular}
+                \caption{Método das diferenças de Newton para o polinômio $P$.
+                Os números em negrito são os coeficientes $c_i$.
+                Os números $A(n), \cdots$ são funções de $n$, não necessariamente $0$.}
+                \label{tab:diff}
+            \end{table}
+
+            Dessa forma, nós concluímos que $c_0 = c_1 = -1$ e que
+            $c_2 = \cdots = c_{n-1} = 0$.
+            Apenas nos resta encontrar $c_n$, que, seguindo a tabela,
+            será uma função de $n$. Até agora, temos
+            
+            $$P(x) = -1 -1(x-1) + c_n(x-1)\cdots(x-n)$$
+
+            Sabendo que $P(0) = (-1)^n$, vemos que
+
+            \begin{align*}
+                P(0) &= (-1)^n \\
+                c_n(-1)\cdots(-n) &= (-1)^n \\
+                c_n(-1)^n n! &= (-1)^n \\
+                c_n &= \dfrac{1}{n!} \\
+            \end{align*}
+
+            Tendo todos os coeficientes, podemos calcular $P(k)$, $k$ natural e maior que $n$:
+
+            \begin{align*}
+                P(k) &= -1-1(k-1)+\dfrac{1}{n!}(k-1)\cdots(k-n) \\
+                &= -k + \dfrac{(k-1)!}{n!(n-1-n)!} \\
+                &= {k-1\choose n} - k
+            \end{align*}
+
+    \end{enumerate}
+\end{document}
