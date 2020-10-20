@@ -195,5 +195,63 @@ Interpolação}
                 &= {k-1\choose n} - k
             \end{align*}
 
+        \pagebreak
+
+        \item[8.] Vamos montar o polinômio interpolador $p_{k-2}$ de $f$ com os pontos $\{x_1, \cdots, x_{k-1}\}$, através dos métodos das diferenças de Newton:
+            
+            $$p_{k-2}(x) = c_0 + \cdots + c_{k-2} (x - x_1)\cdots(x - x_{k-2})$$
+
+            Uma das principais características do método de Newton é que podemos ``reutilizar'' o polinômio
+            ao adicionar mais pontos. Se quisermos interpolar $\{x_1, \cdots, x_k\}$, basta fazermos
+            
+            $$p_{k-1}(x) = c_0 + \cdots + c_{k-2} (x - x_1)\cdots(x - x_{k-2}) + c_{k-1} (x - x_1)\cdots(x - x_{k-1})$$
+
+            Observe que $c_{k-1}$ corresponde a $\Delta[x_1, \cdots, x_k]$, que é o que queremos. Segue:
+
+            \begin{align}
+                p_{k-1}(x) - p_{k-2}(x) &= c_{k-1} (x - x_1)\cdots(x - x_{k-1}) \nonumber \\
+                (f(x) - p_{k-2}(x)) - (f(x) - p_{k-1}(x)) & = c_{k-1} (x - x_1)\cdots(x - x_{k-1}) \label{eq:first}
+            \end{align}
+
+            Seja $A = [\min\{x_1, \cdots, x_k\}, \max\{x_1, \cdots, x_k\}]$.
+            Por conveniência, assumindo que $\{x_1, \cdots, x_k\}$ são diferentes
+            e sabendo que $f = \sin$ é de classe $C^\infty$ no intervalo $A$,
+            sabemos, por teorema, que, para cada $x \in A$,
+            existem $\alpha_x, \beta_x$
+            tais que
+
+            $$f(x) - p_{k-2}(x) = \dfrac{f^{(k-1)}(\alpha_x)}{(k-1)!}(x-x_1)\cdots(x-x_{k-1})$$
+            $$f(x) - p_{k-1}(x) = \dfrac{f^{(k)}(\beta_x)}{k!}(x-x_1)\cdots(x-x_k)$$
+
+            Então, se avaliarmos essas funções em $x_k$ e substituirmos na Equação \ref{eq:first}, obtemos
+
+            \begin{align*}
+                \dfrac{f^{(k-1)}(\alpha_{x_k})}{(k-1)!}(x_k-x_1)\cdots(x_k-x_{k-1}) &= c_{k-1} (x_k - x_1)\cdots(x_k - x_{k-1}) \\
+                \dfrac{f^{(k-1)}(\alpha_{x_k})}{(k-1)!} &= c_{k-1}
+            \end{align*}
+
+            Segue portanto:
+
+            \begin{align*}
+                |c_{k-1}| &= \left|\dfrac{f^{(k-1)}(\alpha_{x_k})}{(k-1)!}\right| \\
+                &= \dfrac{|c^{k-1} \sin(c \alpha_{x_k}+d)|}{(k-1)!} \textrm{ ou } \dfrac{|c^{k-1} \cos(c \alpha_{x_k}+d)|}{(k-1)!} \\
+                &\le \dfrac{|c|^{k-1}}{(k-1)!}
+            \end{align*}
+
+            Basta agora mostrar que isso vai para zero quando k vai para infinito.
+            Ou seja, vamos mostrar que, se $a \ge 0$,
+
+            $$\lim_{k \to \infty} \dfrac{a^k}{k!} = 0$$
+
+            Seja a sequência $y_k = \dfrac{a^k}{k!}$. Considere o termo $y_{2a+1}$. Então:
+
+            $$y_{2a+1} = \dfrac{a^{2a+1}}{(2a+1)!} = \dfrac{a^{2a}}{(2a)!}\dfrac{a}{2a + 1} < \dfrac{a^{2a}}{(2a)!}\dfrac{1}{2} = \dfrac{1}{2} y_{2a}$$
+
+            Concluímos que, para $k$ natural, $y_{2a+k} < \left(\dfrac{1}{2}\right)^k y_{2a}$. Logo:
+
+            $$\lim_{k \to \infty} \dfrac{a^k}{k!} = \lim_{k \to \infty} y_k = \lim_{k \to \infty} y_{2a+k} \le \lim_{k \to \infty} \left(\dfrac{1}{2}\right)^k y_{2a} = 0$$
+
+            Portanto, $|c_{k-1}| \to 0$, ou seja, $\Delta[x_1, \cdots, x_k] \to 0$
+
     \end{enumerate}
 \end{document}
