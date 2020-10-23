@@ -372,8 +372,177 @@ Interpolação}
                     O processo para $y$ é totalmente análogo.
 
                     Ao final, temos portanto $\gamma(t) = (x(t), y(t))$.
+
+                \item O programa foi implementado em Matlab e pode ser conferido no Apêndice
+                    \ref{appendix:splines}.
+                    A utilização do programa se dá da seguinte forma:
+                    vamos montar $k$ \textit{splines} cúblicas paramétricas, cada \textit{spline}
+                    emendada à outra. Cada \textit{spline} será composta de $n + 3$ pontos,
+                    sendo $n + 1$ os pontos de interpolação $(x_0, y_0), \cdots, (x_n, y_n)$
+                    e 2 pontos de ancoragem $(\hat{x}_0, \hat{y}_0), (\hat{x}_n, \hat{y}_n)$.
+                    Iniciamos a função com 
+                    
+                    \begin{center}
+                        \lstinline{interactive_spline(n, k, k_0, k_1)}
+                    \end{center}
+
+                    sendo $k_0$, $k_1$ relacionados à ancoragem, já vistos anteriormente.
+                    Sendo assim, desenha-se os pontos, na ordem
+
+                    $$(x_0, y_0), (\hat{x}_0, \hat{y}_0), (x_1, y_1), \cdots, (x_n, y_n), (\hat{x}_n, \hat{y}_n)$$
+
+                    um total de $k$ vezes.
+
+                    As Figuras \ref{fig:abcde}, \ref{fig:t} e \ref{fig:5} mostram
+                    exemplos do resultado da utilização do programa.
+
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{abcde.png}
+                        \caption{Interpolação por \textit{spline} cúbica paramétrica
+                        para 5 pontos de interpolação e 2 pontos de ancoragem.}
+                        \label{fig:abcde}
+                    \end{figure}
+
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{t.png}
+                        \caption{Interpolação por várias \textit{splines} cúbicas paramétricas
+                        para 2 pontos de interpolação e 2 pontos de ancoragem.}
+                        \label{fig:t}
+                    \end{figure}
+
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{5.png}
+                        \caption{Interpolação por várias \textit{splines} cúbicas paramétricas
+                        para 2 pontos de interpolação e 2 pontos de ancoragem.}
+                        \label{fig:5}
+                    \end{figure}
                                         
             \end{enumerate}
 
     \end{enumerate}
+
+    \clearpage
+
+    \appendix
+
+    \section{Splines interativos}
+        \label{appendix:splines}
+
+        Implementação do algoritmo em Matlab
+        para construção de \textit{splines} cúbicos paramétricos
+        iterativos. O código também pode ser acessado
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_3}{neste link} (pasta em um repositório do GitHub).
+        As funções possuem os mesmos nomes daquelas apresentadas abaixo).
+
+        \begin{lstlisting}[language=Matlab]
+function interactive_spline(n, k, k_0, k_1)
+    clf;
+    axis([0, 10, 0, 10]);
+    hold on;
+    [x_click, y_click] = ginput(1);
+    x = [x_click];
+    y = [y_click];
+    plot(x, y, 'o', ...
+        'MarkerEdgeColor', 'k', ...
+        'MarkerFaceColor', 'k');
+    for j = 1:k
+        for i = 1:n+2
+            [x_click, y_click] = ginput(1);
+            x = [x; x_click];
+            y = [y; y_click];
+            if i == 1 || i == n+2
+                plot(x_click, y_click, 'o', ...
+                'MarkerEdgeColor', 'r', ...
+                'MarkerFaceColor', 'r');
+                plot(x(end-1:end), y(end-1:end), '--', ...
+                    'Color', [200, 200, 200]/255);
+            else
+                if i == n+1
+                    plot(x_click, y_click, 'o', ...
+                    'MarkerEdgeColor', 'k', ...
+                    'MarkerFaceColor', 'k');
+                else
+                    plot(x_click, y_click, 'o', ...
+                    'MarkerEdgeColor', 'b', ...
+                    'MarkerFaceColor', 'b');
+                end
+            end
+        end
+        parametric_cubic_spline(x, y, k_0, k_1);
+        x = [x(end-1)];
+        y = [y(end-1)];
+    end
+    hold off;
+end
+function parametric_cubic_spline(x, y, k_0, k_1)
+    x_t = anchored_cubic_spline(x, k_0, k_1);
+    y_t = anchored_cubic_spline(y, k_0, k_1);
+    plot(x_t, y_t, '-k');
+end
+
+function x_t = anchored_cubic_spline(x, k_0, k_1)
+    x_hat_0 = x(2);
+    x_hat_n = x(end);
+    x(end) = [];
+    x(2) = [];
+    [n, ~] = size(x);
+    n = n-1;
+    h = 1/n;
+    A = zeros(n+1, n+1);
+    b = zeros(n+1, 1);
+    for i=0:n
+        if i == 0
+            j = i+1;
+            A(j, j) = 1/(3*n);
+            A(j, j+1) = 1/(6*n);
+            b(j) = -k_0*(x_hat_0 - x(j)) + n*(x(j+1) - x(j));
+        else
+            if i == n
+                j = i+1;
+                A(j, j-1) = 1/(6*n);
+                A(j, j) = 1/(3*n);
+                b(j) = k_1*(x_hat_n - x(j)) - n*(x(j) - x(j-1));
+            else
+                j = i+1;
+                A(j, j-1) = 1/(6*n);
+                A(j, j) = 2/(3*n);
+                A(j, j+1) = 1/(6*n);
+                b(j) = n*(x(j+1) - 2*x(j) + x(j-1));
+            end
+        end
+        
+    end
+    M = seidel(A, b, 10^-6);
+    x_t = [];
+    for i=0:(n-1)
+        p = interpolator(M(i+1), M(i+2), i/n, (i+1)/n, x(i+1), x(i+2), n);
+        x_t = [x_t, p(i/n:0.01:(i+1)/n)];
+    end
+end
+function x = seidel(A, b, eps)
+    [m, ~] = size(A);
+    x = zeros(m, 1);
+    err = 1;
+    x_old = x;
+    while err > eps
+        for i=1:m
+            x(i) = A(i, 1:(i-1))*x(1:(i-1)) + A(i, (i+1):m)*x((i+1):m);
+            x(i) = -x(i);
+            x(i) = x(i) + b(i);
+            x(i) = x(i)/A(i, i);
+        end
+        err = norm(x - x_old, 'inf')/norm(x_old, 'inf');
+        x_old = x;
+    end
+end
+function x_t = interpolator(M_i, M_ip, t_i, t_ip, x_i, x_ip, n)
+    k_1 = (x_ip-x_i)*n - (M_ip - M_i)/(6*n);
+    k_2 = x_i - M_i/(6*n^2) - k_1*t_i;
+    syms x_t(t);
+    x_t(t) = n*M_i/6*(t_ip-t)^3 + n*M_ip/6*(t-t_i)^3 + k_1*t + k_2;
+end
+        \end{lstlisting}
 \end{document}
