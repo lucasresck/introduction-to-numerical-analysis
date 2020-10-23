@@ -30,15 +30,10 @@ function x_t = anchored_cubic_spline(x, k_0, k_1)
         end
         
     end
-    % Atualizar com algoritmo próprio
-    M = linsolve(A, b);
-%     M_0 = -3*n*k_0*(x_hat_0-x(1)) + 3*n^2*(x(2)-x(1)) - M(1)/2;
-%     M_n = 3*n*k_1*(x_hat_n-x(n+1)) - 3*n^2*(x(n+1)-x(n)) - M(n-1)/2;
-%     M = [M_0; M; M_n];
+    M = seidel(A, b, 10^-6);
     x_t = [];
     for i=0:(n-1)
         p = interpolator(M(i+1), M(i+2), i/n, (i+1)/n, x(i+1), x(i+2), n);
-%         p = diff(diff(p));
         x_t = [x_t, p(i/n:0.01:(i+1)/n)];
     end
 end
