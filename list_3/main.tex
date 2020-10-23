@@ -15,6 +15,7 @@ Interpolação}
 \usepackage{listings}
 \usepackage{multirow}
 \usepackage{hyperref}
+\usepackage{amsfonts}
 
 \lstset{columns=fullflexible}
 
@@ -191,13 +192,18 @@ Interpolação}
 
             \begin{align*}
                 P(k) &= -1-1(k-1)+\dfrac{1}{n!}(k-1)\cdots(k-n) \\
-                &= -k + \dfrac{(k-1)!}{n!(n-1-n)!} \\
+                &= -k + \dfrac{(k-1)!}{n!(k-1-n)!} \\
                 &= {k-1\choose n} - k
             \end{align*}
 
         \pagebreak
 
-        \item[8.] Vamos montar o polinômio interpolador $p_{k-2}$ de $f$ com os pontos $\{x_1, \cdots, x_{k-1}\}$, através dos métodos das diferenças de Newton:
+        \item[8.] Vamos montar os polinômios interpoladores $p_{k-2}$ e $p_{k-1}$ de graus
+            $k-2$ e $k-1$, respectivamente, através do método das diferenças de Newton.
+            Depois vamos encontrar o coeficiente $c_{k-1}$, que corresponde
+            a $\Delta[x_1, \cdots, x_k]$. Ao final, vamos calcular o limite pedido.
+            
+            Seja o polinômio interpolador $p_{k-2}$ de $f$ com os pontos $\{x_1, \cdots, x_{k-1}\}$ através dos métodos das diferenças de Newton:
             
             $$p_{k-2}(x) = c_0 + \cdots + c_{k-2} (x - x_1)\cdots(x - x_{k-2})$$
 
@@ -215,7 +221,7 @@ Interpolação}
 
             Seja $A = [\min\{x_1, \cdots, x_k\}, \max\{x_1, \cdots, x_k\}]$.
             Por conveniência, assumindo que $\{x_1, \cdots, x_k\}$ são diferentes
-            e sabendo que $f = \sin$ é de classe $C^\infty$ no intervalo $A$,
+            e sabendo que $f(x) = \sin(cx + d)$ é de classe $C^\infty$ no intervalo $A$,
             sabemos, por teorema, que, para cada $x \in A$,
             existem $\alpha_x, \beta_x$
             tais que
@@ -238,7 +244,7 @@ Interpolação}
                 &\le \dfrac{|c|^{k-1}}{(k-1)!}
             \end{align*}
 
-            Basta agora mostrar que isso vai para zero quando k vai para infinito.
+            Basta agora mostrar que isso tende a zero quando k tende ao infinito.
             Ou seja, vamos mostrar que, se $a \ge 0$,
 
             $$\lim_{k \to \infty} \dfrac{a^k}{k!} = 0$$
@@ -247,11 +253,11 @@ Interpolação}
 
             $$y_{2a+1} = \dfrac{a^{2a+1}}{(2a+1)!} = \dfrac{a^{2a}}{(2a)!}\dfrac{a}{2a + 1} < \dfrac{a^{2a}}{(2a)!}\dfrac{1}{2} = \dfrac{1}{2} y_{2a}$$
 
-            Concluímos que, para $k$ natural, $y_{2a+k} < \left(\dfrac{1}{2}\right)^k y_{2a}$. Logo:
+            Concluímos que, para $k \in \mathbb{N}^*$, $y_{2a+k} < \left(\dfrac{1}{2}\right)^k y_{2a}$. Logo:
 
             $$\lim_{k \to \infty} \dfrac{a^k}{k!} = \lim_{k \to \infty} y_k = \lim_{k \to \infty} y_{2a+k} \le \lim_{k \to \infty} \left(\dfrac{1}{2}\right)^k y_{2a} = 0$$
 
-            Portanto, $|c_{k-1}| \to 0$, ou seja, $\Delta[x_1, \cdots, x_k] \to 0$
+            Portanto, $c_{k-1} \to 0$, ou seja, $\Delta[x_1, \cdots, x_k] \to 0$
 
         \pagebreak
 
@@ -259,9 +265,11 @@ Interpolação}
             \begin{enumerate}
                 \item Sejam os pontos $(x_0, y_0), \cdots, (x_n, y_n)$,
                     enumerados a partir do zero por conveniência.
+                    Ou seja, $n + 1$ pontos.
+                    Os pontos guia são $(\hat{x}_0, \hat{y}_0)$, $(\hat{x}_n, \hat{y}_n)$
                     Vamos asssumir intervalos de comprimento $h_i = 1/n$,
                     isso é, teremos $t_0 < \cdots < t_n$,
-                    com $t_i = \dfrac{i}{n}$.
+                    com $t_i = \dfrac{i}{n}$ (a conveniência).
                     Portanto, vamos interpolar os $n+1$ pontos
                     com a curva $\gamma(t) = (x(t), y(t))$, $t \in [0, 1]$.
 
@@ -270,7 +278,7 @@ Interpolação}
                     Vamos listar as condições que queremos para nossa curva $\gamma$:
 
                     \begin{itemize}
-                        \item Passar pelos pontos: $\gamma(t_i) = (x(t_i), y(t_i)) = (x_i, t_i)$, $i = 0, \cdots, n$
+                        \item Passar pelos pontos: $\gamma(t_i) = (x(t_i), y(t_i)) = (x_i, y_i)$, $i = 0, \cdots, n$
                         \item Ancoragem 1: $\gamma'(0) = (x'(0), y'(0)) = k_0(\hat{x}_0 - x_0, \hat{y}_0 - y_0)$
                         \item Ancoragem 2: $\gamma'(1) = (x'(1), y'(1)) = k_1(\hat{x}_n - x_n, \hat{y}_n - y_n)$
                         \item Continuidade de $\gamma$ em $t_i$, $i = 1, \cdots, n-1$
@@ -291,8 +299,9 @@ Interpolação}
                         \item Continuidade de $x''$ em $t_i$, $i = 1, \cdots, n-1$
                     \end{itemize}
 
-                    Ora, estamos pedindo uma interpolação por uma spline
-                    cúbica ancorada para $x$. Isso já foi estudado. Então sabemos que,
+                    Ora, estamos pedindo uma interpolação por uma \textit{spline}
+                    cúbica ancorada para $x$, afinal os valores de $t_i$ são crescentes.
+                    Isso já foi estudado. Então sabemos que,
                     se $t \in [t_i, t_{i+1}]$,
 
                     \begin{align*}
@@ -307,7 +316,10 @@ Interpolação}
                         &= n(x_{i+1}-x_i) -\dfrac{1}{6n}(M_{i+1}-M_i) \\
                     \end{align*}
 
-                    $$c_2 = x_i - \dfrac{M_i h_i^2}{6} - c_1 t_i$$
+                    \begin{align*}
+                        c_2 &= x_i - \dfrac{M_i h_i^2}{6} - c_1 t_i \\
+                        &= x_i - \dfrac{M_i}{6n^2} - c_1 t_i \\
+                    \end{align*}
                     
                     Os valores de $M_i$, por sua vez, são encontrados através das equações
 
@@ -316,7 +328,7 @@ Interpolação}
                     para $i = 1, \cdots, n-1$. Essas equações são encontradas aplicando as condições
                     dadas acima, com exceção das ancoragens. Como isso foi feito em sala,
                     é conveniente omitir essa dedução. Porém, essas equações são em quantidade
-                    $n-1$, e temos $n+1$ variáveis $M_i$ para descobrir, ou seja, $M_0, \cdots, M_n$.
+                    $n-1$, e temos $n+1$ variáveis $M_i$ para descobrir: $M_0, \cdots, M_n$.
 
                     Para resolver isso, podemos aplicar as condições de ancoragem em $t_0 = 0$ e $t_n = 1$.
                     Basta resolver $x'(0) = k_0(\hat{x}_0 - x_0)$. Vejamos. Para $t \in [0, 1/n]$, vale que:
@@ -365,22 +377,22 @@ Interpolação}
 
                     Ou seja, conseguindo todos os $M_i$, a partir de um algoritmo
                     de resolução de sistemas lineares (observe que o sistema
-                    é diagonalmente dominante, perfeito para os métodos estudados
+                    é diagonalmente dominante, perfeito para vários métodos estudados
                     em aula), calculamos $c_1$ e $c_2$ e podemos
                     expressar $x(t)$.
 
                     O processo para $y$ é totalmente análogo.
 
-                    Ao final, temos portanto $\gamma(t) = (x(t), y(t))$.
+                    Ao final, temos $\gamma(t) = (x(t), y(t))$.
 
                 \item O programa foi implementado em Matlab e pode ser conferido no Apêndice
                     \ref{appendix:splines}.
                     A utilização do programa se dá da seguinte forma:
                     vamos montar $k$ \textit{splines} cúblicas paramétricas, cada \textit{spline}
-                    emendada à outra. Cada \textit{spline} será composta de $n + 3$ pontos,
+                    emendada à anterior. Cada \textit{spline} será composta de $n + 3$ pontos,
                     sendo $n + 1$ os pontos de interpolação $(x_0, y_0), \cdots, (x_n, y_n)$
                     e 2 pontos de ancoragem $(\hat{x}_0, \hat{y}_0), (\hat{x}_n, \hat{y}_n)$.
-                    Iniciamos a função com 
+                    Iniciamos a função com o comando
                     
                     \begin{center}
                         \lstinline{interactive_spline(n, k, k_0, k_1)}
@@ -392,6 +404,15 @@ Interpolação}
                     $$(x_0, y_0), (\hat{x}_0, \hat{y}_0), (x_1, y_1), \cdots, (x_n, y_n), (\hat{x}_n, \hat{y}_n)$$
 
                     um total de $k$ vezes.
+
+                    O programa lê os pontos selecionados e constrói, para cada intervalo $[t_i, t_{i+1}]$,
+                    o polinômio interpolador, tanto para $x$ quanto para $y$.
+                    O sistema de equações lineares é resolvido utilizando
+                    o método de Seidel (já implementado em exercícios anteriores deste curso),
+                    afinal a matriz é diagonalmente dominante.
+                    Os dois polinômios resultantes em cada pequeno intervalo são calculados
+                    e exibidos graficamente para vários
+                    pontos desse pequeno intervalo, dando a ideia de continuidade.
 
                     As Figuras \ref{fig:abcde}, \ref{fig:t} e \ref{fig:5} mostram
                     exemplos do resultado da utilização do programa.
@@ -428,14 +449,14 @@ Interpolação}
 
     \appendix
 
-    \section{Splines interativos}
+    \section{Programa computacional para \textit{splines} interativos}
         \label{appendix:splines}
 
         Implementação do algoritmo em Matlab
         para construção de \textit{splines} cúbicos paramétricos
-        iterativos. O código também pode ser acessado
+        interativos. O código também pode ser acessado
         \href{https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_3}{neste link} (pasta em um repositório do GitHub).
-        As funções possuem os mesmos nomes daquelas apresentadas abaixo).
+        As funções nessa pasta possuem os mesmos nomes daquelas apresentadas abaixo.
 
         \begin{lstlisting}[language=Matlab]
 function interactive_spline(n, k, k_0, k_1)
@@ -477,6 +498,7 @@ function interactive_spline(n, k, k_0, k_1)
     end
     hold off;
 end
+
 function parametric_cubic_spline(x, y, k_0, k_1)
     x_t = anchored_cubic_spline(x, k_0, k_1);
     y_t = anchored_cubic_spline(y, k_0, k_1);
@@ -522,6 +544,7 @@ function x_t = anchored_cubic_spline(x, k_0, k_1)
         x_t = [x_t, p(i/n:0.01:(i+1)/n)];
     end
 end
+
 function x = seidel(A, b, eps)
     [m, ~] = size(A);
     x = zeros(m, 1);
@@ -538,11 +561,12 @@ function x = seidel(A, b, eps)
         x_old = x;
     end
 end
+
 function x_t = interpolator(M_i, M_ip, t_i, t_ip, x_i, x_ip, n)
-    k_1 = (x_ip-x_i)*n - (M_ip - M_i)/(6*n);
-    k_2 = x_i - M_i/(6*n^2) - k_1*t_i;
+    c_1 = (x_ip-x_i)*n - (M_ip - M_i)/(6*n);
+    c_2 = x_i - M_i/(6*n^2) - c_1*t_i;
     syms x_t(t);
-    x_t(t) = n*M_i/6*(t_ip-t)^3 + n*M_ip/6*(t-t_i)^3 + k_1*t + k_2;
+    x_t(t) = n*M_i/6*(t_ip-t)^3 + n*M_ip/6*(t-t_i)^3 + c_1*t + c_2;
 end
         \end{lstlisting}
 \end{document}
