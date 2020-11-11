@@ -14,7 +14,7 @@ function [t, x] = forward_euler_4(h, t_0, T, x_0)
         t_k = t_0 + k*h;
         t = [t, t_k];
     end
-    plot_solutions(t, x, x_0)
+    plot_solutions(t, x, x_0, h)
 end
 
 function result = f(x)
@@ -23,7 +23,7 @@ function result = f(x)
     result = A*x;
 end
 
-function plot_solutions(t, x, x_0)
+function plot_solutions(t, x, x_0, h)
     % Plot the exact and numerical solutions.
     y1 = x(1, :);
     y2 = x(2, :);
@@ -37,7 +37,7 @@ function plot_solutions(t, x, x_0)
     plot(t, y(1, :))
     hold off
     error_1 = (norm(y1 - y(1, :)));
-    title(sprintf('x_1(t), with error %0.3e', error_1))
+    title(sprintf('x_1(t), h = %0.5f, error = %0.3e', h, error_1))
 
     % Plot the second coordinate
     nexttile
@@ -46,7 +46,7 @@ function plot_solutions(t, x, x_0)
     plot(t, y(2, :))
     hold off
     error_2 = (norm(y2 - y(2, :)));
-    title(sprintf('x_2(t), with error %0.3e', error_2))
+    title(sprintf('x_2(t), h = %0.5f, error = %0.3e', h, error_2))
 end
 
 function x = exact_x(t, x_0)
