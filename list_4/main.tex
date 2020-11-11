@@ -46,13 +46,29 @@ Solução numérica de EDOs}
                     um gráfico do valor exato e do valor aproximado
                     da função no intervalo especificado é exibido.
 
+                    O cálculo do valor exato é obtido resolvendo
+                    a EDO de forma analítica: podemos ver que a solução
+                    será a exponencial de uma matriz, que pode ser
+                    facilmente calculada com o uso da diagonalização.
+                    De forma bastante resumida, se $x_0 = \{c_1, c_2\}$
+                    e $A$ é tal que $x'(t) = A x(t)$, então
+
+                    \begin{align*}
+                        x(t) &= e^{At} x(0) \\
+                        &= Pe^{Dt}P^{-1} x(0) \\
+                        &= \begin{pmatrix}
+                            c_1 e^{-1000*t} + \dfrac{c_2}{1000}\left(e^{-t/10} - e^{-1000*t}\right) \\[6pt]
+                            c_2 e{-t/10}
+                        \end{pmatrix}
+                    \end{align*}
+
                 \item As Figuras \ref{fig:forward_1},
                     \ref{fig:forward_2} e \ref{fig:forward_3}
                     exibem os resultados da aproximação para diferentes
                     valores de $h$, com intervalo de integração $[0, 1]$
                     e condição inicial $x(0) = \{1, 1\}$. Nas Figuras,
-                    também vamos os erros na norma infinito (entre
-                    aproximação e valor exato), além de uma comparação
+                    também vamos os erros na norma infinito, entre
+                    aproximação e valor exato, além de uma comparação
                     no gráfico. Observamos que a solução para a segunda
                     coordenada, $x_2$, sempre fica boa, enquanto a solução
                     para $x_1$ só fica boa para $h < 0.002$.
