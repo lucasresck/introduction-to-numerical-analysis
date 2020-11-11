@@ -6,17 +6,28 @@ function [t, x] = backward_euler_4(h, t_0, T, x_0)
     x = [x_0];
     t = [t_0];
     N = floor((T - t_0)/h);
-    A = [-1000, 1; 0, -1/10];
-    M = inv(eye(2) - A*h);
     for k = 1:N
         x_k_old = x(:, end);
         t_k_old = t(end);
-        x_k = M*x_k_old;
+        x_k = seidel(x_k_old, 10^-3, h);
         x = [x, x_k];
         t_k = t_0 + k*h;
         t = [t, t_k];
     end
     plot_solutions(t, x, x_0)
+end
+
+function x = seidel(b, eps, h)
+    x = zeros(2, 1);
+    err = 1 + eps;
+    x_old = x;
+    C = [0, h/(1+1000*h); 0, 0];
+    d = b ./ [1+1000*h;1+1/10*h];
+    while err > eps
+        x = C*x_old + d;
+        err = norm(x - x_old, 'inf')/norm(x_old, 'inf');
+        x_old = x;
+    end
 end
 
 function plot_solutions(t, x, x_0)
@@ -49,7 +60,8 @@ function x = exact_x(t, x_0)
     % Calculate the exact value of x(t).
     c_1 = x_0(1);
     c_2 = x_0(2);
-    x_1 = c_1.*exp(-1000.*t) + 1/9999.*(10*c_2.*exp(-1000.*t).*(exp(9999.*t./10)-1));
-    x_2 = c_2.*exp(-t./10);
+    x_1 = c_1*exp(-1000*t) + c_2*(exp(-t/10)/1000 - exp(-1000*t)/1000);
+    x_2 = c_2*exp(-t/10);
     x = [x_1; x_2];
 end
+
