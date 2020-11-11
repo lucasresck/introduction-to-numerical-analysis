@@ -53,8 +53,8 @@ function x = exact_x(t, x_0)
     % Calculate the exact value of x(t).
     c_1 = x_0(1);
     c_2 = x_0(2);
-    x_1 = c_1.*exp(-1000.*t) + 1/9999.*(10*c_2.*exp(-1000.*t).*(exp(9999.*t./10)-1));
-    x_2 = c_2.*exp(-t./10);
+    x_1 = c_1*exp(-1000*t) + c_2*(exp(-t/10)/1000 - exp(-1000*t)/1000);
+    x_2 = c_2*exp(-t/10);
     x = [x_1; x_2];
 end
 
