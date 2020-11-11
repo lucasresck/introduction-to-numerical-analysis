@@ -73,64 +73,141 @@ Solução numérica de EDOs}
                     coordenada, $x_2$, sempre fica boa, enquanto a solução
                     para $x_1$ só fica boa para $h < 0.002$.
                 
-                \begin{figure}[!h]
-                    \centering
-                    \includegraphics[width=\textwidth]{forward_1.png}
-                    \caption{Aproximação pelo método (em azul) e
-                    solução exata (em laranja), para $h = 0.005$,
-                    no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.
-                    O erro calculado é a norma infinito entre as
-                    soluções. Vemos que a solução para a segunda
-                    coordenada, $x_2$, ficou boa, porém para a primeira
-                    coordenada, $x_1$, ficou péssima.}
-                    \label{fig:forward_1}
-                \end{figure}
-                
-                \begin{figure}[!h]
-                    \centering
-                    \includegraphics[width=\textwidth]{forward_2.png}
-                    \caption{Aproximação pelo método (em azul) e
-                    solução exata (em laranja), para $h = 0.002$,
-                    no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.
-                    Vemos que a solução para a segunda
-                    coordenada, $x_2$, ficou boa, porém para a primeira
-                    coordenada, $x_1$, ficou péssima.}
-                    \label{fig:forward_2}
-                \end{figure}
-                
-                \begin{figure}[!h]
-                    \centering
-                    \includegraphics[width=\textwidth]{forward_3.png}
-                    \caption{Aproximação pelo método (em azul) e
-                    solução exata (em laranja), para $h = 0.001$,
-                    no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.
-                    Vemos que a solução para a segunda
-                    coordenada, $x_2$, ficou boa, assim como para a primeira
-                    coordenada, $x_1$.}
-                    \label{fig:forward_3}
-                \end{figure}
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{forward_1.png}
+                        \caption{Aproximação pelo método Forward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.005$,
+                        no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.
+                        O erro calculado é a norma infinito entre as
+                        soluções.}
+                        \label{fig:forward_1}
+                    \end{figure}
+                    
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{forward_2.png}
+                        \caption{Aproximação pelo método Forward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.002$,
+                        no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.}
+                        \label{fig:forward_2}
+                    \end{figure}
+                    
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{forward_3.png}
+                        \caption{Aproximação pelo método Forward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.001$,
+                        no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.}
+                        \label{fig:forward_3}
+                    \end{figure}
 
-                No nosso problema, temos $x' = Ax$, com $\text{Re}(\lambda) < 0$,
-                sendo $\lambda$ autovalor de $A$. De fato,
-                $\lambda_1 = -1000 < 0, \lambda_2 = -1/10 < 0$.
-                Sabemos que o domínio de estabilidade do método
-                Forward Euler é dado por
-                $\{z \in \mathbb{C} : |r(z)| = |1 + z| < 1\}$. Para que o método
-                numérico reproduza a dinâmica da solução, devemos ter
+                    \clearpage
 
-                \begin{align*}
-                    &|r(\lambda h)| < 1 \\
-                    \Rightarrow &|1 + \lambda h| < 1 \\
-                    \Rightarrow &\begin{cases}
-                        |1 -1000 h| < 1 \\
-                        \left|1 - \dfrac{1}{10} h\right| < 1 \\
-                    \end{cases} \\
-                    \Rightarrow &0 < h < 0.002
-                \end{align*}
+                    No nosso problema, temos $x' = Ax$, com $\text{Re}(\lambda) < 0$,
+                    sendo $\lambda$ autovalor de $A$. De fato,
+                    $\lambda_1 = -1000 < 0, \lambda_2 = -1/10 < 0$.
+                    Sabemos que o domínio de estabilidade do método
+                    Forward Euler é dado por
+                    $\{z \in \mathbb{C} : |r(z)| = |1 + z| < 1\}$. Para que o método
+                    numérico reproduza a dinâmica da solução, devemos ter
+
+                    \begin{align*}
+                        &|r(\lambda h)| < 1 \\
+                        \Rightarrow &|1 + \lambda h| < 1 \\
+                        \Rightarrow &\begin{cases}
+                            |1 -1000 h| < 1 \\
+                            \left|1 - \dfrac{1}{10} h\right| < 1 \\
+                        \end{cases} \\
+                        \Rightarrow &0 < h < 0.002
+                    \end{align*}
+                    
+                    Conclusão: o método só reproduz a dinâmica da solução
+                    exata quando $h < 0.002$, o que pode ser verificado nos
+                    resultados numéricos.
+
+                \item O método Backward Euler foi implementado e seu código
+                    pode ser visualizado no Apêndice \ref{appendix:backward_euler}.
+                    
+                    O algoritmo é muito semelhante àquele do método Forward Euler.
+                    A principal diferença é o cálculo de $x_{k+1}$ a partir de
+                    $x_k$. No método Foward Euler, isso é direto. Porém, agora,
+                    com o Backward Euler, temos:
+
+                    \begin{align*}
+                        &x_{k+1} = x_k + f(t_{k+1}, x_{k+1}) h \\
+                        \Rightarrow &x_{k+1} = x_k + Ax_{k+1} h \\
+                        \Rightarrow &(I - Ah)x_{k+1} = x_k \\
+                        \Rightarrow &M x_{k+1} = x_k \\
+                    \end{align*}
+
+                    Isso é um sistema linear $2\times2$ a ser resolvido. Acredite, a matriz
+                    é diagonalmente dominante, e isso é fácil de ser verificado.
+                    O algoritmo do Apêndice \ref{appendix:backward_euler} implementa
+                    o método de Seidel para sua resolução.
+
+                    As Figuras \ref{fig:backward_1}, \ref{fig:backward_2},
+                    \ref{fig:backward_3} e \ref{fig:backward_4}
+                    exibem os resultados da aproximação para diferentes
+                    valores de $h$, com intervalo de integração $[0, 1]$
+                    e condição inicial $x(0) = \{1, 1\}$. Nas Figuras,
+                    também vamos os erros na norma infinito, entre
+                    aproximação e valor exato, além de uma comparação
+                    no gráfico. Observamos que a solução para as duas
+                    coordenadas, $x_1$ e $x_2$, ficam boas, para qualquer
+                    valor de $h$.
                 
-                Conclusão: o método só reproduz a dinâmica da solução
-                exata quando $h < 0.002$, o que pode ser verificado nos
-                resultados numéricos.
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{backward_1.png}
+                        \caption{Aproximação pelo método Backward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.005$.}
+                        \label{fig:backward_1}
+                    \end{figure}
+                
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{backward_2.png}
+                        \caption{Aproximação pelo método Backward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.002$.}
+                        \label{fig:backward_2}
+                    \end{figure}
+                
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{backward_3.png}
+                        \caption{Aproximação pelo método Backward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.001$.}
+                        \label{fig:backward_3}
+                    \end{figure}
+                
+                    \begin{figure}[!h]
+                        \centering
+                        \includegraphics[width=0.8\textwidth]{backward_4.png}
+                        \caption{Aproximação pelo método Backward Euler (em azul) e
+                        solução exata (em laranja), para $h = 0.0001$.}
+                        \label{fig:backward_4}
+                    \end{figure}
+
+                    \clearpage
+
+                    Verificamos que o desempenho do método
+                    Backward Euler é bem melhor. Isso se dá,
+                    entre outras coisas, pelo fato de que
+                    o domínio de estabilidade desse método é
+                    (infinitamente) melhor. Ele é:
+
+                    \begin{align*}
+                        &|r(\lambda h)| < 1 \\
+                        \Rightarrow &\left|\dfrac{1}{1 - \lambda h}\right| < 1 \\
+                        \Rightarrow &\begin{cases}
+                            \left|\dfrac{1}{1 + 1000 h}\right| < 1 \\
+                            \left|\dfrac{1}{1 + \frac{1}{10} h}\right| < 1 \\
+                        \end{cases} \\
+                        \Rightarrow & h > 0
+                    \end{align*}
+
+                    Ou seja, qualquer que seja $h$, temos um método A-estável.
 
             \end{enumerate} 
     \end{enumerate}
@@ -141,6 +218,13 @@ Solução numérica de EDOs}
 
     \section{Forward Euler}
         \label{appendix:forward_euler}
+
+        \begin{lstlisting}[language=Matlab]
+            TO-DO
+        \end{lstlisting}
+
+    \section{Backward Euler}
+        \label{appendix:backward_euler}
 
         \begin{lstlisting}[language=Matlab]
             TO-DO
