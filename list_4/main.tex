@@ -109,6 +109,29 @@ Solução numérica de EDOs}
                     coordenada, $x_1$.}
                     \label{fig:forward_3}
                 \end{figure}
+
+                No nosso problema, temos $x' = Ax$, com $\text{Re}(\lambda) < 0$,
+                sendo $\lambda$ autovalor de $A$. De fato,
+                $\lambda_1 = -1000 < 0, \lambda_2 = -1/10 < 0$.
+                Sabemos que o domínio de estabilidade do método
+                Forward Euler é dado por
+                $\{z \in \mathbb{C} : |r(z)| = |1 + z| < 1\}$. Para que o método
+                numérico reproduza a dinâmica da solução, devemos ter
+
+                \begin{align*}
+                    &|r(\lambda h)| < 1 \\
+                    \Rightarrow &|1 + \lambda h| < 1 \\
+                    \Rightarrow &\begin{cases}
+                        |1 -1000 h| < 1 \\
+                        \left|1 - \dfrac{1}{10} h\right| < 1 \\
+                    \end{cases} \\
+                    \Rightarrow &0 < h < 0.002
+                \end{align*}
+                
+                Conclusão: o método só reproduz a dinâmica da solução
+                exata quando $h < 0.002$, o que pode ser verificado nos
+                resultados numéricos.
+
             \end{enumerate} 
     \end{enumerate}
 
