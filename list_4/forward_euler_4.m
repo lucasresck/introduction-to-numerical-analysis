@@ -36,6 +36,8 @@ function plot_solutions(t, x, x_0, h)
     hold on
     plot(t, y(1, :))
     hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
     error_1 = (norm(y1 - y(1, :)));
     title(sprintf('x_1(t), h = %0.5f, error = %0.3e', h, error_1))
 
@@ -45,6 +47,8 @@ function plot_solutions(t, x, x_0, h)
     hold on
     plot(t, y(2, :))
     hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
     error_2 = (norm(y2 - y(2, :)));
     title(sprintf('x_2(t), h = %0.5f, error = %0.3e', h, error_2))
 end
