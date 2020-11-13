@@ -1,8 +1,8 @@
 function [t, x] = backward_euler_4(h, t_0, T, x_0)
     % Approximate the solution with Backward Euler method.
     % Examples:
-        % [t, x] = backward_euler_4(0.0001, 0, 0.5, [10;10]);
-        % [t, x] = backward_euler_4(0.01, 0, 0.5, [10;10]);
+        % [t, x] = backward_euler_4(0.0001, 0, 1, [1;1]);
+        % [t, x] = backward_euler_4(0.01, 0, 1, [1;1]);
     x = [x_0];
     t = [t_0];
     N = floor((T - t_0)/h);
@@ -18,6 +18,7 @@ function [t, x] = backward_euler_4(h, t_0, T, x_0)
 end
 
 function x = seidel(b, eps, h)
+    % Solve linear system with Seidel method.
     x = zeros(2, 1);
     err = 1 + eps;
     x_old = x;

@@ -1,6 +1,6 @@
 function x = rk4_6(h, T, k, a, b)
-    % Calculate the Runge–Kutta fourth-order method
-    % Examples:
+    % Calculate the Runge-Kutta fourth-order method
+    % Example:
         % x = rk4_6(0.5, 20, 0.01, 70, 50);
     x_0 = 0;
     t_0 = 0;
@@ -23,10 +23,12 @@ function x = rk4_6(h, T, k, a, b)
 end
 
 function y = f(x, k, a, b)
+    % Calculate f.
     y = k*(a - x)*(b - x);
 end
 
 function plot_solutions(t, x, h)
+    % Plot the exact and numerical solutions.
     plot(t, x);
     hold on;
     plot(t, exact_x(t));
@@ -41,5 +43,6 @@ function plot_solutions(t, x, h)
 end
 
 function x = exact_x(t)
+    % Calculate the exact value of x(t).
     x = 350*(1 - exp(-0.2*t))./(7 - 5*exp(-0.2*t));
 end

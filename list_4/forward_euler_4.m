@@ -1,8 +1,8 @@
 function [t, x] = forward_euler_4(h, t_0, T, x_0)
     % Approximate the solution with Forward Euler method.
     % Examples:
-        % [t, x] = forward_euler_4(0.0001, 0, 0.5, [10;10]);
-        % [t, x] = forward_euler_4(0.01, 0, 0.5, [10;10]);
+        % [t, x] = forward_euler_4(0.0001, 0, 1, [1;1]);
+        % [t, x] = forward_euler_4(0.01, 0, 1, [1;1]);
     x = [x_0];
     t = [t_0];
     N = floor((T - t_0)/h);
