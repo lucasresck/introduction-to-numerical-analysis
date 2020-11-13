@@ -209,7 +209,79 @@ Solução numérica de EDOs}
 
                     Ou seja, qualquer que seja $h$, temos um método A-estável.
 
-            \end{enumerate} 
+            \end{enumerate}
+
+            \pagebreak
+
+            \item[6.]
+                \begin{enumerate}
+                    \item A função que implementa o método RK4 clássico
+                        para aproximar a solução da EDO pode ser conferida
+                        no Apêndice \ref{appendix:runge_kutta}.
+
+                        O método de Runge-Kutta foi implementado de forma
+                        semelhante aos método anteriores, no que diz respeito
+                        ao cálculo do número de iterações e da atualização
+                        da solução numérica. A diferença é a função que é 
+                        utilizada para a aproximação numérica, própria deste
+                        método.
+
+                        A função também compara as soluções exata e aproximada
+                        em um gráfico, além de exibir o erro (na norma infinito)
+                        entre as soluções. O resultado da execução da função para
+                        $h = 0.5$, $T = 20$, $k = 0.01$, $a = 70$, $b = 50$ pode ser
+                        conferido na Figura \ref{fig:rk_1}.
+                
+                        \begin{figure}[!h]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{rk_1.png}
+                            \caption{Soluções exata e numérica (RK4 clássico)
+                            da função $x$.}
+                            \label{fig:rk_1}
+                        \end{figure}
+
+                    \item O programa foi testado para diferentes valores de $T$,
+                        e as comparações entre os valores exato e numérico
+                        podem ser conferidas nas Figuras
+                        \ref{fig:rk_2}, \ref{fig:rk_3} e \ref{fig:rk_4}.
+                
+                        \begin{figure}[!h]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{rk_2.png}
+                            \caption{Soluções exata e numérica (RK4 clássico)
+                            da função $x$.}
+                            \label{fig:rk_2}
+                        \end{figure}
+                
+                        \begin{figure}[!h]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{rk_3.png}
+                            \caption{Soluções exata e numérica (RK4 clássico)
+                            da função $x$.}
+                            \label{fig:rk_3}
+                        \end{figure}
+                
+                        \begin{figure}[!h]
+                            \centering
+                            \includegraphics[width=0.8\textwidth]{rk_4.png}
+                            \caption{Soluções exata e numérica (RK4 clássico)
+                            da função $x$.}
+                            \label{fig:rk_4}
+                        \end{figure}
+
+                        \clearpage
+
+                        Observamos que não foi necessário ajustar o parâmetro
+                        $h$ para que houvesse convergência, deixando-o como
+                        $h = 0.5$ anteriormente dado. Vemos que a solução
+                        numérica aproxima muito bem a solução real, em todos
+                        esses casos.
+
+                    \item Observamos através dos gráficos que o método RK4 reproduz
+                        o comportamento assintótico da solução exata. Portanto,
+                        concluímos que, sim, existe valor fixo de $h$ que satisfaz
+                        isso. No nosso caso, bastou $h = 0.5$.
+                \end{enumerate} 
     \end{enumerate}
 
     \clearpage
@@ -225,6 +297,13 @@ Solução numérica de EDOs}
 
     \section{Backward Euler}
         \label{appendix:backward_euler}
+
+        \begin{lstlisting}[language=Matlab]
+            TO-DO
+        \end{lstlisting}
+
+    \section{Runge-Kutta 4 clássico}
+        \label{appendix:runge_kutta}
 
         \begin{lstlisting}[language=Matlab]
             TO-DO
