@@ -13,23 +13,27 @@ function x = rk4_6(h, T, k, a, b)
         k_2 = f(x_i_old + h/2*k_1, k, a, b);
         k_3 = f(x_i_old + h/2*k_2, k, a, b);
         k_4 = f(x_i_old + h*k_3, k, a, b);
-        x_i = x_i_old + h/6*(k_1 + 2*k_2 + 2*k_3 + k_4);
+        phi = 1/6*(k_1 + 2*k_2 + 2*k_3 + k_4);
+        x_i = x_i_old + h*phi;
         x = [x, x_i];
         t_i = t_0 + i*h;
         t = [t, t_i];
     end
-    plot_solutions(t, x);
+    plot_solutions(t, x, h);
 end
 
 function y = f(x, k, a, b)
     y = k*(a - x)*(b - x);
 end
 
-function plot_solutions(t, x)
+function plot_solutions(t, x, h)
     plot(t, x);
     hold on;
     plot(t, exact_x(t));
     hold off;
+    title(sprintf('x(t) (numerical and exact solutions), h = %0.2f', h))
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'southeast')
 end
 
 function x = exact_x(t)
