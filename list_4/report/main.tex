@@ -75,7 +75,7 @@ Solução numérica de EDOs}
                 
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{forward_1.png}
+                        \includegraphics[width=0.8\textwidth]{../images/forward_1.png}
                         \caption{Aproximação pelo método Forward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.005$,
                         no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.
@@ -86,7 +86,7 @@ Solução numérica de EDOs}
                     
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{forward_2.png}
+                        \includegraphics[width=0.8\textwidth]{../images/forward_2.png}
                         \caption{Aproximação pelo método Forward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.002$,
                         no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.}
@@ -95,7 +95,7 @@ Solução numérica de EDOs}
                     
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{forward_3.png}
+                        \includegraphics[width=0.8\textwidth]{../images/forward_3.png}
                         \caption{Aproximação pelo método Forward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.001$,
                         no intervalo $[0, 1]$, com $x(0) = \{1, 1\}$.}
@@ -159,7 +159,7 @@ Solução numérica de EDOs}
                 
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{backward_1.png}
+                        \includegraphics[width=0.8\textwidth]{../images/backward_1.png}
                         \caption{Aproximação pelo método Backward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.005$.}
                         \label{fig:backward_1}
@@ -167,7 +167,7 @@ Solução numérica de EDOs}
                 
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{backward_2.png}
+                        \includegraphics[width=0.8\textwidth]{../images/backward_2.png}
                         \caption{Aproximação pelo método Backward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.002$.}
                         \label{fig:backward_2}
@@ -175,7 +175,7 @@ Solução numérica de EDOs}
                 
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{backward_3.png}
+                        \includegraphics[width=0.8\textwidth]{../images/backward_3.png}
                         \caption{Aproximação pelo método Backward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.001$.}
                         \label{fig:backward_3}
@@ -183,7 +183,7 @@ Solução numérica de EDOs}
                 
                     \begin{figure}[!h]
                         \centering
-                        \includegraphics[width=0.8\textwidth]{backward_4.png}
+                        \includegraphics[width=0.8\textwidth]{../images/backward_4.png}
                         \caption{Aproximação pelo método Backward Euler (em azul) e
                         solução exata (em laranja), para $h = 0.0001$.}
                         \label{fig:backward_4}
@@ -234,7 +234,7 @@ Solução numérica de EDOs}
                 
                         \begin{figure}[!h]
                             \centering
-                            \includegraphics[width=0.8\textwidth]{rk_1.png}
+                            \includegraphics[width=0.8\textwidth]{../images/rk_1.png}
                             \caption{Soluções exata e numérica (RK4 clássico)
                             da função $x$.}
                             \label{fig:rk_1}
@@ -247,7 +247,7 @@ Solução numérica de EDOs}
                 
                         \begin{figure}[!h]
                             \centering
-                            \includegraphics[width=0.8\textwidth]{rk_2.png}
+                            \includegraphics[width=0.8\textwidth]{../images/rk_2.png}
                             \caption{Soluções exata e numérica (RK4 clássico)
                             da função $x$.}
                             \label{fig:rk_2}
@@ -255,7 +255,7 @@ Solução numérica de EDOs}
                 
                         \begin{figure}[!h]
                             \centering
-                            \includegraphics[width=0.8\textwidth]{rk_3.png}
+                            \includegraphics[width=0.8\textwidth]{../images/rk_3.png}
                             \caption{Soluções exata e numérica (RK4 clássico)
                             da função $x$.}
                             \label{fig:rk_3}
@@ -263,7 +263,7 @@ Solução numérica de EDOs}
                 
                         \begin{figure}[!h]
                             \centering
-                            \includegraphics[width=0.8\textwidth]{rk_4.png}
+                            \includegraphics[width=0.8\textwidth]{../images/rk_4.png}
                             \caption{Soluções exata e numérica (RK4 clássico)
                             da função $x$.}
                             \label{fig:rk_4}
@@ -291,22 +291,210 @@ Solução numérica de EDOs}
     \section{Forward Euler}
         \label{appendix:forward_euler}
 
+        Código em Matlab para o exercício 4. Também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/blob/master/list_4/forward_euler_4.m}{neste link}.
+
         \begin{lstlisting}[language=Matlab]
-            TO-DO
+function [t, x] = forward_euler_4(h, t_0, T, x_0)
+    % Approximate the solution with Forward Euler method.
+    % Examples:
+        % [t, x] = forward_euler_4(0.0001, 0, 1, [1;1]);
+        % [t, x] = forward_euler_4(0.01, 0, 1, [1;1]);
+    x = [x_0];
+    t = [t_0];
+    N = floor((T - t_0)/h);
+    for k = 1:N
+        x_k_old = x(:, end);
+        t_k_old = t(end);
+        x_k = x_k_old + f(x_k_old)*h;
+        x = [x, x_k];
+        t_k = t_0 + k*h;
+        t = [t, t_k];
+    end
+    plot_solutions(t, x, x_0, h)
+end
+
+function result = f(x)
+    % Calculate f.
+    A = [-1000, 1; 0, -1/10];
+    result = A*x;
+end
+
+function plot_solutions(t, x, x_0, h)
+    % Plot the exact and numerical solutions.
+    y1 = x(1, :);
+    y2 = x(2, :);
+    y = exact_x(t, x_0);
+    tiledlayout(2,1)
+    
+    % Plot the first coordinate
+    nexttile
+    plot(t, y1)
+    hold on
+    plot(t, y(1, :))
+    hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
+    error_1 = (norm(y1 - y(1, :)));
+    title(sprintf('x_1(t), h = %0.5f, error = %0.3e', h, error_1))
+
+    % Plot the second coordinate
+    nexttile
+    plot(t,y2)
+    hold on
+    plot(t, y(2, :))
+    hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
+    error_2 = (norm(y2 - y(2, :)));
+    title(sprintf('x_2(t), h = %0.5f, error = %0.3e', h, error_2))
+end
+
+function x = exact_x(t, x_0)
+    % Calculate the exact value of x(t).
+    c_1 = x_0(1);
+    c_2 = x_0(2);
+    x_1 = c_1*exp(-1000*t) + c_2*(exp(-t/10)/1000 - exp(-1000*t)/1000);
+    x_2 = c_2*exp(-t/10);
+    x = [x_1; x_2];
+end
         \end{lstlisting}
 
     \section{Backward Euler}
         \label{appendix:backward_euler}
 
+        Código em Matlab para o exercício 4. Também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/blob/master/list_4/backward_euler_4.m}{neste link}.
+
         \begin{lstlisting}[language=Matlab]
-            TO-DO
+function [t, x] = backward_euler_4(h, t_0, T, x_0)
+    % Approximate the solution with Backward Euler method.
+    % Examples:
+        % [t, x] = backward_euler_4(0.0001, 0, 1, [1;1]);
+        % [t, x] = backward_euler_4(0.01, 0, 1, [1;1]);
+    x = [x_0];
+    t = [t_0];
+    N = floor((T - t_0)/h);
+    for k = 1:N
+        x_k_old = x(:, end);
+        t_k_old = t(end);
+        x_k = seidel(x_k_old, 10^-3, h);
+        x = [x, x_k];
+        t_k = t_0 + k*h;
+        t = [t, t_k];
+    end
+    plot_solutions(t, x, x_0, h)
+end
+
+function x = seidel(b, eps, h)
+    % Solve linear system with Seidel method.
+    x = zeros(2, 1);
+    err = 1 + eps;
+    x_old = x;
+    C = [0, h/(1+1000*h); 0, 0];
+    d = b ./ [1+1000*h;1+1/10*h];
+    while err > eps
+        x = C*x_old + d;
+        err = norm(x - x_old, 'inf')/norm(x_old, 'inf');
+        x_old = x;
+    end
+end
+
+function plot_solutions(t, x, x_0, h)
+    % Plot the exact and numerical solutions.
+    y1 = x(1, :);
+    y2 = x(2, :);
+    y = exact_x(t, x_0);
+    tiledlayout(2,1)
+    
+    % Plot the first coordinate
+    nexttile
+    plot(t, y1)
+    hold on
+    plot(t, y(1, :))
+    hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
+    error_1 = (norm(y1 - y(1, :)));
+    title(sprintf('x_1(t), h = %0.5f, error = %0.3e', h, error_1))
+
+    % Plot the second coordinate
+    nexttile
+    plot(t,y2)
+    hold on
+    plot(t, y(2, :))
+    hold off
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'northeast')
+    error_2 = (norm(y2 - y(2, :)));
+    title(sprintf('x_2(t), h = %0.5f, error = %0.3e', h, error_2))
+end
+
+function x = exact_x(t, x_0)
+    % Calculate the exact value of x(t).
+    c_1 = x_0(1);
+    c_2 = x_0(2);
+    x_1 = c_1*exp(-1000*t) + c_2*(exp(-t/10)/1000 - exp(-1000*t)/1000);
+    x_2 = c_2*exp(-t/10);
+    x = [x_1; x_2];
+end
         \end{lstlisting}
 
     \section{Runge-Kutta 4 clássico}
         \label{appendix:runge_kutta}
 
+        Código em Matlab para o exercício 6. Também pode ser conferido
+        \href{https://github.com/lucasresck/introduction-to-numerical-analysis/blob/master/list_4/rk4_6.m}{neste link}.
+
         \begin{lstlisting}[language=Matlab]
-            TO-DO
+function x = rk4_6(h, T, k, a, b)
+    % Calculate the Runge-Kutta fourth-order method
+    % Example:
+        % x = rk4_6(0.5, 20, 0.01, 70, 50);
+    x_0 = 0;
+    t_0 = 0;
+    x = [x_0];
+    t = [t_0];
+    N = floor((T - 0)/h);
+    for i = 1:N
+        x_i_old = x(end);
+        k_1 = f(x_i_old, k, a, b);
+        k_2 = f(x_i_old + h/2*k_1, k, a, b);
+        k_3 = f(x_i_old + h/2*k_2, k, a, b);
+        k_4 = f(x_i_old + h*k_3, k, a, b);
+        phi = 1/6*(k_1 + 2*k_2 + 2*k_3 + k_4);
+        x_i = x_i_old + h*phi;
+        x = [x, x_i];
+        t_i = t_0 + i*h;
+        t = [t, t_i];
+    end
+    plot_solutions(t, x, h);
+end
+
+function y = f(x, k, a, b)
+    % Calculate f.
+    y = k*(a - x)*(b - x);
+end
+
+function plot_solutions(t, x, h)
+    % Plot the exact and numerical solutions.
+    plot(t, x);
+    hold on;
+    plot(t, exact_x(t));
+    hold off;
+    error = norm(x - exact_x(t), 'inf');
+    title(...
+        sprintf(...
+        'x(t) (numerical and exact solutions), h = %0.2f, error = %0.3e', ...
+        h, error))
+    legend({'Numerical solution', 'Exact solution'}, ...
+    'Location', 'southeast')
+end
+
+function x = exact_x(t)
+    % Calculate the exact value of x(t).
+    x = 350*(1 - exp(-0.2*t))./(7 - 5*exp(-0.2*t));
+end
         \end{lstlisting}
 
 \end{document}
