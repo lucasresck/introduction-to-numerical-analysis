@@ -31,3 +31,6 @@ Assignment codes for Introduction to Numerical Analysis (2020), in Applied Mathe
   - Taylor method
   - A-stability
 
+This is an example of various parametric cubic splines:
+
+<img src="https://raw.githubusercontent.com/lucasresck/introduction-to-numerical-analysis/master/list_3/images/5.png" width="600">
