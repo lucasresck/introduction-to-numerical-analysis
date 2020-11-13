@@ -57,4 +57,3 @@ function x = exact_x(t, x_0)
     x_2 = c_2*exp(-t/10);
     x = [x_1; x_2];
 end
-
