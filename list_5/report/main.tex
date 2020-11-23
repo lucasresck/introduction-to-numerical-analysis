@@ -31,8 +31,92 @@ Solução numérica de EDP}
 
     \maketitle
 
+    Esta é a solução da questão 7.
+
+    \begin{itemize}
+        \item[(a)] O método CTCS para a equação da onda
+            descrita foi implementado em Matlab e pode
+            ser conferido no Apêndice \ref{appendix:ctcs}.
+
+            O algoritmo particiona $[-10, 10]$ com intervalo
+            $\Delta x$ desejado e $[0, T]$ com intervalo
+            $\Delta t$ desejado. Então calcula-se $u_0$ utilizando a função
+            $f(x) = e^{-x^2}$, a matriz $A$ utilizando
+            $\sigma = c \Delta t / \Delta x = \Delta t / \Delta x$
+            (dado que $c = 1$) e,
+            finalmente, $u_1$, utilizando $u_0$, $g(x) = 0$, $p(x) = 0$
+            e $q(x) = 0$. Dado que temos as condições iniciais,
+            podemos partir para a iteração de $u_i$ para obter
+            o valor de $u$ em todo o \textit{grid}. Isso ocorre com
+            a seguinte iteração (que é autoexplicativa):
+
+            \begin{lstlisting}[language=Matlab]
+aux = zeros(m, 1);
+aux(1) = sigma^2*p(i*dt);
+aux(end) = sigma^2*q(i*dt);
+u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
+            \end{lstlisting}
+
+            A construção do gráfico ocorre utilizando a função
+            \lstinline[language=Matlab]{surf}. Antes da exibição do gráfico,
+            é realizada uma diminuição da quantidade de pontos, amostrando
+            apenas alguns deles, igualmente espaçados. Observe que isso
+            não impacta o cálculo de $u$, afinal é apenas no momento da
+            visualização que isso ocorre. Note que isso é necessário,
+            pois são muitos pontos que impossibilitam a correta visualização
+            da solução numérica $u$.
+
+            A Figura \ref{fig:wave_1} mostra o resultado do método CTCS
+            para $\Delta x = 0.04$ e $\Delta t = 0.02$ em
+            $[-10, 10] \times [0, 120]$. Observamos que a onda inicial se divide
+            em duas ondas menores, até que essas duas ondas ``rebatem'' na ``parede''
+            (condição de fronteira) e invertem. Depois elas se encontram novamente,
+            dessa vez invertidas, logo
+            se separaram, invertem e de juntam novamente, exatamente como a condição
+            inicial.
+
+            \begin{figure}[!h]
+                \centerline{
+                    \includegraphics[width=1.4\textwidth]{images/wave_1.png}
+                }
+                \caption{Solução numérica CTCS para a equação da onda, com $c = 1$,
+                $\Delta x = 0.04$ e $\Delta t = 0.02$, na região $[-10, 10] \times [0, 40]$.}
+                \label{fig:wave_1}
+            \end{figure}
+
+        \item[(b)] As Figuras \ref{fig:wave_2} e \ref{fig:wave_3} mostram
+            o resultado da solução numérica nas regiões
+            $[-10, 10] \times [0, 80]$ e $[-10, 10] \times [0, 120]$,
+            respectivamente.
+
+            Fica clara a repetição do padrão que é descrito na Figura
+            \ref{fig:wave_1}. Esse padrão se repete 2 vezes na Figura \ref{fig:wave_2}
+            e 3 vezes na Figura \ref{fig:wave_3}.
+
+            \begin{figure}[!h]
+                \centerline{
+                    \includegraphics[width=1.4\textwidth]{images/wave_2.png}
+                }
+                \caption{Solução numérica CTCS para a equação da onda, com $c = 1$,
+                $\Delta x = 0.04$ e $\Delta t = 0.02$, na região $[-10, 10] \times [0, 80]$.}
+                \label{fig:wave_2}
+            \end{figure}
+
+            \begin{figure}[!h]
+                \centerline{
+                    \includegraphics[width=1.4\textwidth]{images/wave_3.png}
+                }
+                \caption{Solução numérica CTCS para a equação da onda, com $c = 1$,
+                $\Delta x = 0.04$ e $\Delta t = 0.02$, na região $[-10, 10] \times [0, 120]$.}
+                \label{fig:wave_3}
+            \end{figure}
+    \end{itemize}
+
     \clearpage
 
     \appendix
+
+    \section{Método CTCS para a equação da onda}
+        \label{appendix:ctcs}
 
 \end{document}
