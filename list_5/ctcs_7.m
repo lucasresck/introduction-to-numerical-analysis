@@ -34,6 +34,7 @@ function [x, t, u] = ctcs(c, a, b, f, g, p, q, dx, dt, T)
         i = i - 1;
         aux = zeros(m, 1);
         aux(1) = sigma^2*p(i*dt);
+        aux(end) = sigma^2*q(i*dt);
         u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
     end
     u = [p(t)'; u; q(t)'];
