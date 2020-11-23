@@ -1,4 +1,5 @@
 function [x, t, u] = ctcs_7(dx, dt, a, b, T)
+    % Solve exercise 7 (wave equation and CTCS).
     % Examples:
         % [x, t, u] = ctcs_7(0.04, 0.02, -10, 10, 40);
         % [x, t, u] = ctcs_7(0.04, 0.040008, -10, 10, 40);
@@ -7,6 +8,7 @@ function [x, t, u] = ctcs_7(dx, dt, a, b, T)
 end
 
 function [x, t, u] = ctcs(c, a, b, f, g, p, q, dx, dt, T)
+    % Calculate the generic CTCS method.
     x = a:dx:b;
     x = x';
     [N_x, ~] = size(x);
@@ -38,6 +40,7 @@ function [x, t, u] = ctcs(c, a, b, f, g, p, q, dx, dt, T)
 end
 
 function plot_u(x, t, u)
+    % Plot the function through space and time.
     [m, n] = size(u);
     c = floor(m/100);
     d = floor(n/50);
@@ -45,17 +48,21 @@ function plot_u(x, t, u)
     t = t(1:d:n);
     u = u(1:c:m, 1:d:n);
     [t, x] = meshgrid(t', x');
-    s = surf(x, t, u);
-%     s.EdgeColor = 'none';
+    surf(x, t, u);
+    title('Numeric solution for wave equation');
+    xlabel('x') 
+    ylabel('t') 
 end
 
 function A = A_matrix(sigma, m)
+    % Compute the A matrix of recurrence.
     A = eye(m)*(2-2*sigma^2);
     A(1:(end-1), 2:end) = A(1:(end-1), 2:end) + eye(m-1)*sigma^2;
     A(2:end, 1:(end-1)) = A(2:end, 1:(end-1)) + eye(m-1)*sigma^2;
 end
 
 function y = f(x)
+    % Compute f function.
     y = exp(-x.^2);
 end
 
