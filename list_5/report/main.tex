@@ -84,6 +84,8 @@ u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
                 \label{fig:wave_1}
             \end{figure}
 
+            \clearpage
+
         \item[(b)] As Figuras \ref{fig:wave_2} e \ref{fig:wave_3} mostram
             o resultado da solução numérica nas regiões
             $[-10, 10] \times [0, 80]$ e $[-10, 10] \times [0, 120]$,
@@ -110,6 +112,49 @@ u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
                 $\Delta x = 0.04$ e $\Delta t = 0.02$, na região $[-10, 10] \times [0, 120]$.}
                 \label{fig:wave_3}
             \end{figure}
+
+            \clearpage
+
+        \item[(c)] A condição CFL foi obedecida em todos os exemplos anteriores.
+            Vamos, agora, violar essa condição. Vamos escolher $\Delta x = 0.4$
+            e $\Delta t = 0.040008$. Ou seja,
+
+            $$\sigma = c\dfrac{\Delta t}{\Delta x} = \dfrac{0.040008}{0.4} > 1$$
+
+            Os valores foram escolhidos para que $\sigma > 1$.
+
+            A Figura \ref{fig:wave_4} apresenta o resultado da solução
+            numérica CTCS para $\Delta x = 0.04$ e $\Delta t = 0.040008$ em
+            $[-10, 10] \times [0, 40]$. Observamos que a solução começa a
+            ``explodir''. Note que esse valor curioso para $\Delta t$ foi
+            escolhido cuidadosamente de modo que fosse possível
+            visualizar tanto a onda quanto a ``explosão''.
+
+            \begin{figure}[!h]
+                \centerline{
+                    \includegraphics[width=1.4\textwidth]{images/wave_4.png}
+                }
+                \caption{Solução numérica CTCS para a equação da onda, com $c = 1$,
+                $\Delta x = 0.04$ e $\Delta t = 0.040008$, na região $[-10, 10] \times [0, 40]$.}
+                \label{fig:wave_4}
+            \end{figure}
+
+            \clearpage
+
+            A Figura \ref{fig:wave_5} mostra o resultado para um valor de
+            $\Delta t$, digamos, menos generoso: $\Delta t = 0.041$. A explosão
+            chega à ordem de grandeza $10^{170}$!
+
+            \begin{figure}[!h]
+                \centerline{
+                    \includegraphics[width=1.4\textwidth]{images/wave_5.png}
+                }
+                \caption{Solução numérica CTCS para a equação da onda, com $c = 1$,
+                $\Delta x = 0.04$ e $\Delta t = 0.041$, na região $[-10, 10] \times [0, 40]$.}
+                \label{fig:wave_5}
+            \end{figure}
+
+
     \end{itemize}
 
     \clearpage
