@@ -31,11 +31,11 @@ Solução numérica de EDP}
 
     \maketitle
 
-    Esta é a solução da questão 7.
+    \section*{Questão 7}
 
-    \begin{itemize}
+    \begin{enumerate}
         \item[(a)] O método CTCS para a equação da onda
-            descrita foi implementado em Matlab e pode
+            descrita no enunciado foi implementado em Matlab e pode
             ser conferido no Apêndice \ref{appendix:ctcs}.
 
             O algoritmo particiona $[-10, 10]$ com intervalo
@@ -68,12 +68,12 @@ u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
 
             A Figura \ref{fig:wave_1} mostra o resultado do método CTCS
             para $\Delta x = 0.04$ e $\Delta t = 0.02$ em
-            $[-10, 10] \times [0, 120]$. Observamos que a onda inicial se divide
+            $[-10, 10] \times [0, 40]$. Observamos que a onda inicial se divide
             em duas ondas menores, até que essas duas ondas ``rebatem'' na ``parede''
             (condição de fronteira) e invertem. Depois elas se encontram novamente,
             dessa vez invertidas, logo
-            se separaram, invertem e de juntam novamente, exatamente como a condição
-            inicial.
+            se separaram, invertem e se juntam novamente, exatamente como a condição
+            inicial. Vamos chamar esse padrão de ``catarata''.
 
             \begin{figure}[!h]
                 \centerline{
@@ -87,11 +87,12 @@ u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
             \clearpage
 
         \item[(b)] As Figuras \ref{fig:wave_2} e \ref{fig:wave_3} mostram
-            o resultado da solução numérica nas regiões
+            os resultados da solução numérica nas regiões
             $[-10, 10] \times [0, 80]$ e $[-10, 10] \times [0, 120]$,
             respectivamente.
 
-            Fica clara a repetição do padrão que é descrito na Figura
+            Fica clara a repetição do padrão ``catarata'', descrito no
+            exercício anterior e exemplificado na Figura
             \ref{fig:wave_1}. Esse padrão se repete 2 vezes na Figura \ref{fig:wave_2}
             e 3 vezes na Figura \ref{fig:wave_3}.
 
@@ -154,8 +155,11 @@ u(1:end, i+1) = A*u(1:end, i) - u(1:end, i-1) + aux;
                 \label{fig:wave_5}
             \end{figure}
 
+            Concluímos que o padrão ``catarata'' é perdido quando a condição
+            CFL é violada.
 
-    \end{itemize}
+
+    \end{enumerate}
 
     \clearpage
 
