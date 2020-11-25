@@ -43,8 +43,8 @@ end
 function plot_u(x, t, u)
     % Plot the function through space and time.
     [m, n] = size(u);
-    c = floor(m/100);
-    d = floor(n/50);
+    c = floor(m/50);
+    d = floor(n/200);
     x = x(1:c:m);
     t = t(1:d:n);
     u = u(1:c:m, 1:d:n);
@@ -78,4 +78,3 @@ end
 function y = q(x)
     y = x - x;
 end
-
