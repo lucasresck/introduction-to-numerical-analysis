@@ -30,7 +30,11 @@ Assignment codes for Introduction to Numerical Analysis (2020), in Applied Mathe
   - Runge-Kutta
   - Taylor method
   - A-stability
+- **[List 5: Numerical Solution for PDE](https://github.com/lucasresck/introduction-to-numerical-analysis/tree/master/list_5)**
+  - BTCS, FTCS and CTCS methods
+  - Crank-Nicolson method
+  - Wave, heat and Poisson equations
 
-This is an example of various parametric cubic splines:
+This is an example of a numerical solution (CTCS) for a specific wave equation:
 
-<img src="https://raw.githubusercontent.com/lucasresck/introduction-to-numerical-analysis/master/list_3/report/images/5.png" width="600">
+![](https://github.com/lucasresck/introduction-to-numerical-analysis/blob/master/list_5/report/images/wave_1.png?raw=true)
